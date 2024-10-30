@@ -64,6 +64,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.3.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation("androidx.test.uiautomator:uiautomator:2.2.0")
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)

@@ -77,7 +77,7 @@ fun CustomNavigationBarItem(
                 AppScreens.Bookmarks -> Icons.Filled.Favorite
                 AppScreens.Profile -> Icons.Filled.Person
             },
-            contentDescription = null,
+            contentDescription = screen.name,
             modifier = Modifier.size(iconSize),
             tint = iconColor
         )
