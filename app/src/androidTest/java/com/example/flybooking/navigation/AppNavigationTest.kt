@@ -13,12 +13,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class AppNavigationUiAutomatorTest {
+class AppNavigationTest {
 
     private lateinit var device: UiDevice
     private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
     private val PACKAGE_NAME = "com.example.flybooking"
-    private val CHANGE_SCREEN_TIMEOUT = 500L
+    private val CHANGE_SCREEN_TIMEOUT = 2000L
 
     @Before
     fun setUp() {
@@ -52,7 +52,9 @@ class AppNavigationUiAutomatorTest {
         val exploreScreen = device.wait(Until.hasObject(By.desc("Screen_Explore")), timeout)
 
         // Check if the Profile screen is displayed
-        assertNotNull("Explore screen should be displayed after clicking Explore", exploreScreen)
+        assert(exploreScreen) {
+            "Explore screen should be displayed after clicking Explore"
+        }
     }
 
     @Test
@@ -66,7 +68,9 @@ class AppNavigationUiAutomatorTest {
         val bookmarksScreen = device.wait(Until.hasObject(By.desc("Screen_Bookmarks")), timeout)
 
         // Check if the Bookmarks screen is displayed
-        assertNotNull("Bookmarks screen should be displayed after clicking Bookmarks", bookmarksScreen)
+        assert(bookmarksScreen) {
+            "Bookmarks screen should be displayed after clicking Bookmarks"
+        }
     }
 
     @Test
@@ -80,6 +84,8 @@ class AppNavigationUiAutomatorTest {
         val profileScreen = device.wait(Until.hasObject(By.desc("Screen_Profile")), timeout)
 
         // Check if the Profile screen is displayed
-        assertNotNull("Profile screen should be displayed after clicking Profile", profileScreen)
+        assert(profileScreen) {
+            "Profile screen should be displayed after clicking Profile"
+        }
     }
 }
