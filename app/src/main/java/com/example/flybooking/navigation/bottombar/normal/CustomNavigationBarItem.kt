@@ -1,4 +1,4 @@
-package com.example.flybooking.navigation.bottombar
+package com.example.flybooking.navigation.bottombar.normal
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
@@ -50,16 +50,16 @@ fun CustomNavigationBarItem(
     // Chỉ định rõ kiểu `Color` cho `backgroundColor`
     val backgroundColor by animateColorAsState(
         targetValue = if (isSelected) Color(0xFF0080FF) else Color.Transparent,
-        animationSpec = tween(durationMillis = 300)
+        animationSpec = tween(durationMillis = 200)
     )
 
     val iconColor by animateColorAsState(
         targetValue = if (isSelected) Color.White else Color.Gray,
-        animationSpec = tween(durationMillis = 300)
+        animationSpec = tween(durationMillis = 200)
     )
     val labelColor by animateColorAsState(
         targetValue = if (isSelected) Color.White else Color.Gray,
-        animationSpec = tween(durationMillis = 300)
+        animationSpec = tween(durationMillis = 200)
     )
 
     Row(
@@ -76,8 +76,9 @@ fun CustomNavigationBarItem(
                 AppScreens.Explore -> Icons.Filled.Search
                 AppScreens.Bookmarks -> Icons.Filled.Favorite
                 AppScreens.Profile -> Icons.Filled.Person
+                else -> Icons.Filled.Home // Dummy
             },
-            contentDescription = null,
+            contentDescription = screen.name,
             modifier = Modifier.size(iconSize),
             tint = iconColor
         )
@@ -91,3 +92,4 @@ fun CustomNavigationBarItem(
         }
     }
 }
+

@@ -1,4 +1,4 @@
-package com.example.flybooking.navigation.bottombar
+package com.example.flybooking.navigation.bottombar.normal
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
