@@ -5,6 +5,8 @@ import com.example.flybooking.BuildConfig
 import com.example.flybooking.model.response.Activity
 import com.example.flybooking.model.response.FlightSearchResponse
 import com.example.flybooking.model.response.GeoCode
+import com.example.flybooking.model.response.Hotel
+import com.example.flybooking.model.response.HotelsResponse
 import com.example.flybooking.network.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -106,6 +108,26 @@ class Repository(private val apiService: ApiService) {
             } else null
         }
     }
+
+    suspend fun getHotelsByCity(cityCode: String): List<Hotel>? {
+        return withContext(Dispatchers.IO) {
+            val accessToken = getAccessTokenIfNeeded() ?: return@withContext null
+
+            val response = retryWithDelay {
+                apiService.getHotelByCity(
+                    authorization = "Bearer $accessToken",
+                    cityCode = cityCode
+                )
+            }
+
+            if (response?.isSuccessful == true) {
+                response.body()?.data // Trả về danh sách hotels từ HotelsResponse
+            } else {
+                null
+            }
+        }
+    }
+
 
     suspend fun getActivities(latitude: Double, longitude: Double): List<Activity>? {
         return withContext(Dispatchers.IO) {

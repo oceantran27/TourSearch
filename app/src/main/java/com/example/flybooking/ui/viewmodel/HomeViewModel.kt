@@ -7,8 +7,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+const val ONE_DAY_TIME: Long = 86400000L
+const val ONE_WEEK_TIME: Long = 7 * ONE_DAY_TIME
+
 class HomeViewModel(
-    private val repository: Repository,
+        private val repository: Repository,
 ) : ViewModel() {
     private val _homeUiState = MutableStateFlow(HomeUiState())
     val homeUiState = _homeUiState.asStateFlow()
@@ -63,7 +66,7 @@ class HomeViewModel(
         } else {
             _homeUiState.update { state ->
                 val updatedReturnDate = if (state.returnDate <= newDate) {
-                    newDate + 86400000L
+                    newDate + ONE_DAY_TIME
                 } else {
                     state.returnDate
                 }
@@ -75,7 +78,7 @@ class HomeViewModel(
     fun updateReturnDate(newDate: Long) {
         _homeUiState.update { state ->
             // Điều kiện: Ngày về phải lớn hơn ngày đi ít nhất 1 ngày
-            val minimumReturnDate = state.departureDate + 86400000L // Ngày đi + 1 ngày
+            val minimumReturnDate = state.departureDate + ONE_DAY_TIME // Ngày đi + 1 ngày
             if (newDate < minimumReturnDate) {
                 _errorMessage.value = "Return date must be at least 1 day after the departure date"
                 state.copy(returnDate = minimumReturnDate)
@@ -121,15 +124,15 @@ class HomeViewModel(
 }
 
 data class HomeUiState(
-    val bannerName: String = "FlyBooking",
-    val bannerDesc: String = "Book your flight now",
+    val bannerName: String = "TravelMate",
+    val bannerDesc: String = "Discover Your Journey",
     val bannerImageId: Int = R.drawable.profile,
     val departure: String = "",
     val destination: String = "",
     val passengerAdultCount: Int = 1,
     val passengerChildCount: Int = 1,
-    val departureDate: Long = System.currentTimeMillis(),
-    val returnDate: Long = System.currentTimeMillis() + 86400000L, // Mặc định là ngày hôm sau
+    val departureDate: Long = System.currentTimeMillis() + ONE_WEEK_TIME,
+    val returnDate: Long = departureDate + ONE_WEEK_TIME, // Mặc định là 1 tuần sau
     val moneyAmount: Double = 0.0,
     val isFormValid: Boolean = false
 )

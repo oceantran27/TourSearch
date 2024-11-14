@@ -3,6 +3,7 @@ package com.example.flybooking.network
 import com.example.flybooking.model.response.AccessTokenResponse
 import com.example.flybooking.model.response.ActivitiesResponse
 import com.example.flybooking.model.response.FlightSearchResponse
+import com.example.flybooking.model.response.HotelsResponse
 import com.example.flybooking.model.response.LocationResponse
 import retrofit2.Response
 import retrofit2.http.Field
@@ -50,4 +51,10 @@ interface ApiService {
         @Query("longitude") longitude: Double,
         @Query("radius") radius: Int = 5
     ): Response<ActivitiesResponse>
+
+    @GET("v1/reference-data/locations/hotels/by-city")
+    suspend fun getHotelByCity(
+        @Header("Authorization") authorization: String,
+        @Query("cityCode") cityCode: String,
+    ) : Response<HotelsResponse>
 }
