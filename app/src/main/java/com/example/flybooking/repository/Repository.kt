@@ -5,14 +5,14 @@ import com.example.flybooking.BuildConfig
 import com.example.flybooking.model.response.Activity
 import com.example.flybooking.model.response.FlightSearchResponse
 import com.example.flybooking.model.response.GeoCode
-import com.example.flybooking.network.ApiService
+import com.example.flybooking.network.AmadeusApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.util.concurrent.TimeUnit
 
-class Repository(private val apiService: ApiService) {
+class Repository(private val amadeusApiService: AmadeusApiService) {
 
     private var accessToken: String? = null
     private var tokenExpirationTime: Long = 0
@@ -37,7 +37,7 @@ class Repository(private val apiService: ApiService) {
     suspend fun getAccessToken(callback: (String?, Long?, String?) -> Unit) {
         withContext(Dispatchers.IO) {
             try {
-                val response = apiService.getAccessToken("client_credentials", buildAuthHeader())
+                val response = amadeusApiService.getAccessToken("client_credentials", buildAuthHeader())
                 if (response.isSuccessful) {
                     val accessToken = response.body()?.access_token
                     val expiresIn = response.body()?.expires_in
@@ -64,7 +64,7 @@ class Repository(private val apiService: ApiService) {
             val accessToken = getAccessTokenIfNeeded() ?: return@withContext null
 
             val response = retryWithDelay {
-                apiService.searchFlights(
+                amadeusApiService.searchFlights(
                     authorization = "Bearer $accessToken",
                     origin = departure,
                     destination = destination,
@@ -96,7 +96,7 @@ class Repository(private val apiService: ApiService) {
         return withContext(Dispatchers.IO) {
             val accessToken = getAccessTokenIfNeeded() ?: return@withContext null
             val response = retryWithDelay {
-                apiService.getLocation(
+                amadeusApiService.getLocation(
                     authorization = "Bearer $accessToken",
                     keyword = keyword
                 )
@@ -111,7 +111,7 @@ class Repository(private val apiService: ApiService) {
         return withContext(Dispatchers.IO) {
             val accessToken = getAccessTokenIfNeeded() ?: return@withContext null
             val response = retryWithDelay {
-                apiService.getActivities(
+                amadeusApiService.getActivities(
                     authorization = "Bearer $accessToken",
                     latitude = latitude,
                     longitude = longitude

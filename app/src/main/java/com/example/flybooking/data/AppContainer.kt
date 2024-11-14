@@ -1,7 +1,7 @@
 package com.example.flybooking.data
 
 import android.content.Context
-import com.example.flybooking.network.ApiService
+import com.example.flybooking.network.AmadeusApiService
 import com.example.flybooking.repository.Repository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -21,9 +21,9 @@ class DefaultAppContainer(context: Context) : AppContainer {
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
 
-    private val apiService: ApiService = retrofit.create(ApiService::class.java)
+    private val amadeusApiService: AmadeusApiService = retrofit.create(AmadeusApiService::class.java)
 
     override val repository: Repository by lazy {
-        Repository(apiService)
+        Repository(amadeusApiService)
     }
 }
