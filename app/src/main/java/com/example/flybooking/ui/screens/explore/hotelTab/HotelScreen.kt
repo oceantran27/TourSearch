@@ -4,15 +4,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flybooking.AppViewModelProvider
-import com.example.flybooking.model.response.Hotel
 import com.example.flybooking.ui.screens.activities.LoadingScene
 import com.example.flybooking.ui.viewmodel.HotelsUiState
 import com.example.flybooking.ui.viewmodel.HotelsViewModel
-import androidx.compose.ui.Modifier // Import chính xác cho Modifier
+import kotlinx.coroutines.launch
 
 @Composable
 fun HotelsScreen(
@@ -21,6 +23,7 @@ fun HotelsScreen(
     modifier: Modifier = Modifier
 ) {
     val hotelsUiState by hotelsViewModel.hotelsUiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
     when (hotelsUiState) {
         is HotelsUiState.Loading -> LoadingScene()
@@ -34,6 +37,15 @@ fun HotelsScreen(
             }
         }
     }
+
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            hotelsViewModel.searchHotels(
+                cityCode = cityCode
+            )
+        }
+    }
+
 }
 
 

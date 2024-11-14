@@ -7,8 +7,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,8 +64,8 @@ fun ExploreScreen() {
         }
     ) { innerPadding ->
         when (selectedTabIndex) {
-            1 -> HotelsScreen(cityCode = "NYC")
-            0 -> EventTab(modifier = Modifier.fillMaxSize().padding(innerPadding))
+            0 -> HotelsScreen(cityCode = "PAR")
+            1 -> EventTab(modifier = Modifier.fillMaxSize().padding(innerPadding))
             2 -> VehicleTab(modifier = Modifier.fillMaxSize().padding(innerPadding))
         }
     }

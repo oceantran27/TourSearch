@@ -31,7 +31,10 @@ fun HotelCard(hotel: Hotel) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = hotel.name, style = MaterialTheme.typography.headlineLarge)
-            Text(text = "${hotel.address.countryCode} - ${hotel.distance.value} ${hotel.distance.unit}", style = MaterialTheme.typography.bodyMedium)
+            Text(
+                text = "${hotel.address?.countryCode ?: ""} - ${hotel.distance?.value ?: ""} ${hotel.distance?.unit ?: ""}",
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }

@@ -12,8 +12,8 @@ data class Hotel(
     val name: String,
     val hotelId: String,
     val geoCode: GeoCode,
-    val address: Address,
-    val distance: Distance,
+    val address: Address ?= null,
+    val distance: Distance ?= null,
 )
 
 @Serializable
