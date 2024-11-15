@@ -39,8 +39,8 @@ data class ActivityPrice(
     }
 }
 
-
+@Serializable
 class ActivityCard (
     val activity: Activity,
-    val selected: Boolean
+    val selected: Boolean = false
 )

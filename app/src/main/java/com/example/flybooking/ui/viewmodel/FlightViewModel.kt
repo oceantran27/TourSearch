@@ -22,7 +22,7 @@ sealed interface FlightUiState {
 class FlightViewModel(
     private val repository: Repository
 ) : ViewModel() {
-    var flightUiState: FlightUiState by mutableStateOf(FlightUiState.Loading)
+    var flightUiState: FlightUiState by mutableStateOf(FlightUiState.Success())
         private set
 
     fun searchFlights(

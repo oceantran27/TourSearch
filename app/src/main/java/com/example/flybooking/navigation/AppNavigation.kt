@@ -25,7 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.flybooking.navigation.bottombar.droplet.AnimatedBottomBar
-import com.example.flybooking.ui.screens.home.HomeScreen
+import com.example.flybooking.ui.screens.home.search.HomeScreen
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier) {

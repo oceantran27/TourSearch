@@ -24,7 +24,7 @@ sealed interface ActivitiesUiState {
 class ActivitiesViewModel(
     private val repository: Repository
 ) : ViewModel() {
-    var activitiesUiState: ActivitiesUiState by mutableStateOf(ActivitiesUiState.Loading)
+    var activitiesUiState: ActivitiesUiState by mutableStateOf(ActivitiesUiState.Success())
         private set
 
     fun searchActivities(destination: String) {
@@ -32,13 +32,17 @@ class ActivitiesViewModel(
             activitiesUiState = ActivitiesUiState.Loading
             activitiesUiState = try {
                 val geocode = repository.getGeocodeFromIATA(destination)
+                var index = 0
                 geocode.let {
                     val activities = repository.getActivities(it!!.latitude, it.longitude)
                     val validActivities = activities?.filter {
                             activity -> activity.isValid()
                     }?.sortedBy { activity -> activity.price?.amount?.toDoubleOrNull() }
-                        ?.map { activity -> ActivityCard(activity, false) }?: emptyList()
-                    ActivitiesUiState.Success(cards = validActivities)
+                        ?.map { activity -> ActivityCard(activity, (++index <= 3)) }?: emptyList()
+                    ActivitiesUiState.Success(
+                        cards = validActivities,
+                        selected = validActivities.filter { it.selected }.map { it.activity }
+                    )
                 }
             } catch (e: Exception) {
                 ActivitiesUiState.Error
@@ -83,16 +87,21 @@ class ActivitiesViewModel(
             )
         }
     }
+
+    fun initWithSelected(selected: List<Activity>) {
+        if (activitiesUiState is ActivitiesUiState.Success) {
+            val successState = activitiesUiState as ActivitiesUiState.Success
+            val updatedCards = successState.cards.map {
+                ActivityCard(it.activity, selected.contains(it.activity))
+            }
+            activitiesUiState = ActivitiesUiState.Success(
+                cards = updatedCards,
+                totalCost = successState.totalCost,
+                selected = selected
+            )
+        }
+    }
 }
-
-
-//data class ActivitiesState(
-//    val cards: List<ActivityCard> = emptyList(),
-//    val selected: List<Activity> = emptyList(),
-//    val totalCost: Double = 0.0,
-//    val isLoading: Boolean = false,
-//    val error: Boolean = false
-//)
 
 fun convertToUSD(price: Double, currency: String): Double {
     val exchangeRates = mapOf(
