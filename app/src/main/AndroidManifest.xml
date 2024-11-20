@@ -30,6 +30,7 @@
         <activity android:name=".activity.FlightSearchActivity" />
         <activity android:name=".activity.ResultActivity" />
         <activity android:name=".activity.ActivitiesEditActivity" />
+        <activity android:name=".activity.FlightsEditActivity" />
     </application>
 
 </manifest>

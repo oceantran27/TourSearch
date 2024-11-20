@@ -11,7 +11,8 @@ import kotlinx.coroutines.launch
 
 sealed interface FlightUiState {
     data class Success(
-        val offers: List<FlightOffer> = emptyList()
+        val offers: List<FlightOffer> = emptyList(),
+        val selected: FlightOffer? = null
     ) : FlightUiState
 
     object Error : FlightUiState
@@ -44,11 +45,16 @@ class FlightViewModel(
                     adults = adults,
                     children = children
                 )!!.data
-                FlightUiState.Success(offers)
+                FlightUiState.Success(offers = offers, selected = offers.firstOrNull())
             } catch (e: Exception) {
                 FlightUiState.Error
             }
         }
+    }
+
+    fun selectOffer(offer: FlightOffer) {
+        flightUiState = (flightUiState as? FlightUiState.Success)?.copy(selected = offer)
+            ?: FlightUiState.Success(selected = offer)
     }
 }
 

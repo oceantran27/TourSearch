@@ -24,8 +24,7 @@ fun FlightSuccess(
         )
         Spacer(modifier = Modifier.weight(1f))
         FlightOfferCard(
-            offer = offers[0],
-            isLastCard = true
+            offer = offers[0]
         )
     }
 }

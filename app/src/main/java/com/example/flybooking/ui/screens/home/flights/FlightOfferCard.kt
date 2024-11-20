@@ -15,13 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.flybooking.R
 import com.example.flybooking.model.response.AirportInfo
 import com.example.flybooking.model.response.FlightOffer
@@ -34,19 +36,35 @@ import kotlin.math.ceil
 @Composable
 fun FlightOfferCard(
     modifier: Modifier = Modifier,
-    offer: FlightOffer,
-    isLastCard: Boolean = false,
+    offer: FlightOffer
 ) {
+    val context = LocalContext.current
     Column(
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.logo_vna_v),
-            contentDescription = null,
-            contentScale = ContentScale.Fit,
-            modifier = Modifier.height(35.dp).align(Alignment.CenterHorizontally)
-        )
+        if (offer.validatingAirlineCodes?.isNotEmpty() == true) {
+            val imageUrl = "https://content.airhex.com/content/logos/airlines_" +
+                    offer.validatingAirlineCodes.first() +
+                    "_350_100_r.png"
+            val imageRequest = ImageRequest.Builder(context)
+                .data(imageUrl)
+                .crossfade(true)
+                .build()
+
+            AsyncImage(
+                model = imageRequest,
+                contentDescription = null,
+                contentScale = ContentScale.FillHeight,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(65.dp)
+                    .padding(vertical = 8.dp, horizontal = 16.dp)
+            )
+        }
+
         offer.itineraries.forEach { itinerary ->
             Spacer(modifier = Modifier.height(8.dp))
             FlightPath(
@@ -71,15 +89,6 @@ fun FlightOfferCard(
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF0c79e9),
                 modifier = Modifier.align(Alignment.BottomEnd)
-            )
-        }
-        if (!isLastCard) {
-            Spacer(modifier = Modifier.height(8.dp))
-            Image(
-                painter = painterResource(id = R.drawable.dash_line),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(Color(0xfffaf8ff)),
-                modifier = Modifier.fillMaxWidth()
             )
         }
     }
@@ -193,7 +202,6 @@ fun FlightOfferCardPreview() {
                 total = "100",
                 base = "90"
             )
-        ),
-        isLastCard = true
+        )
     )
 }
