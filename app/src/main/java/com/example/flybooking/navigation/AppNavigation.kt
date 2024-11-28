@@ -99,8 +99,8 @@ fun AppNavigation(modifier: Modifier = Modifier) {
             composable(AppScreens.Bookmarks.name) {
                 ScreenPlaceholder(screenName = AppScreens.Bookmarks.name)
             }
-            composable(AppScreens.Profile.name) {
-                ScreenPlaceholder(screenName = AppScreens.Profile.name)
+            composable(AppScreens.Setting.name) {
+                ScreenPlaceholder(screenName = AppScreens.Setting.name)
             }
 //            composable(AppScreens.SearchResults.name) {
 //                ScreenPlaceholder(screenName = AppScreens.SearchResults.name)

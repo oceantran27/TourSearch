@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -64,9 +65,15 @@ fun CustomNavigationBarItem(
 
     Row(
         modifier = modifier
-            .clickable(onClick = onClick, indication = null, interactionSource = remember { MutableInteractionSource() })
+            .clickable(
+                onClick = onClick,
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() })
             .padding(horizontal = 8.dp, vertical = 4.dp)
-            .background(color = backgroundColor, shape = if (isSelected) RoundedCornerShape(50.dp) else CircleShape)
+            .background(
+                color = backgroundColor,
+                shape = if (isSelected) RoundedCornerShape(50.dp) else CircleShape
+            )
             .padding(horizontal = if (isSelected) 12.dp else 0.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -75,7 +82,7 @@ fun CustomNavigationBarItem(
                 AppScreens.Home -> Icons.Filled.Home
                 AppScreens.Explore -> Icons.Filled.Search
                 AppScreens.Bookmarks -> Icons.Filled.Favorite
-                AppScreens.Profile -> Icons.Filled.Person
+                AppScreens.Setting -> Icons.Filled.Settings
                 else -> Icons.Filled.Home // Dummy
             },
             contentDescription = screen.name,

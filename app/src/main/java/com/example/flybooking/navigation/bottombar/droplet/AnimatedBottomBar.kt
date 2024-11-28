@@ -46,7 +46,7 @@ fun AnimatedBottomBar(
                 isSelected = index == selectedTab,
                 onClick = {
                     if (index != selectedTab)
-                          onTabSelected(index)
+                        onTabSelected(index)
                 },
                 icon = button.icon,
                 backgroundIcon = button.outlinedIcon,
@@ -54,7 +54,9 @@ fun AnimatedBottomBar(
                 outlineColor = RoyalPurple,
                 enterExitAnimationSpec = tween(durationMillis = 500, easing = LinearEasing),
                 wiggleAnimationSpec = spring(dampingRatio = .45f, stiffness = 35f),
-                modifier = Modifier.fillMaxWidth().height(64.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
             )
         }
     }
@@ -88,8 +90,8 @@ val navButtons = listOf(
         description = "Bookmarks"
     ),
     NavButton(
-        icon = R.drawable.shield_account,
-        outlinedIcon = R.drawable.shield_account_outline,
+        icon = R.drawable.setting,
+        outlinedIcon = R.drawable.setting,
         isSelected = false,
         description = "Profile"
     ),

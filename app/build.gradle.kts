@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -55,6 +56,7 @@ android {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -72,6 +74,9 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.3.1")
     implementation("com.exyte:animated-navigation-bar:1.0.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
