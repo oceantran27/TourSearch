@@ -25,15 +25,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ActivitiesSearchActivity" />
+<!--        <activity android:name=".activity.ActivitiesSearchActivity" />-->
         <activity android:name=".activity.ActivityDetailActivity" />
-        <activity android:name=".activity.FlightSearchActivity" />
+<!--        <activity android:name=".activity.FlightSearchActivity" />-->
         <activity android:name=".activity.ResultActivity" />
         <activity android:name=".activity.ActivitiesEditActivity" />
         <activity android:name=".activity.FlightsEditActivity" />
         <activity android:name=".activity.TransferSearchActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.ProfileActivity" />
     </application>
 
 </manifest>

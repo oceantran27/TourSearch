@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,9 +27,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.flybooking.AppViewModelProvider
-import com.example.flybooking.LoginActivity
-import com.example.flybooking.ProfileActivity
+import com.example.flybooking.activity.AppViewModelProvider
+import com.example.flybooking.activity.LoginActivity
+import com.example.flybooking.activity.ProfileActivity
 import com.example.flybooking.R
 import com.example.flybooking.ui.theme.ButtonBackground
 import com.example.flybooking.ui.viewmodel.AuthViewModel

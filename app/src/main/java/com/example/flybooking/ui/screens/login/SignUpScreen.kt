@@ -30,8 +30,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.flybooking.AppViewModelProvider
-import com.example.flybooking.MainActivity
+import com.example.flybooking.activity.AppViewModelProvider
+import com.example.flybooking.activity.MainActivity
 import com.example.flybooking.model.User
 import com.example.flybooking.ui.viewmodel.AuthState
 import com.example.flybooking.ui.viewmodel.AuthViewModel
