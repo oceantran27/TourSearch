@@ -1,4 +1,4 @@
-package com.example.flybooking.navigation.bottombar
+package com.example.flybooking.navigation.bottombar.normal
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -50,23 +51,29 @@ fun CustomNavigationBarItem(
     // Chỉ định rõ kiểu `Color` cho `backgroundColor`
     val backgroundColor by animateColorAsState(
         targetValue = if (isSelected) Color(0xFF0080FF) else Color.Transparent,
-        animationSpec = tween(durationMillis = 300)
+        animationSpec = tween(durationMillis = 200)
     )
 
     val iconColor by animateColorAsState(
         targetValue = if (isSelected) Color.White else Color.Gray,
-        animationSpec = tween(durationMillis = 300)
+        animationSpec = tween(durationMillis = 200)
     )
     val labelColor by animateColorAsState(
         targetValue = if (isSelected) Color.White else Color.Gray,
-        animationSpec = tween(durationMillis = 300)
+        animationSpec = tween(durationMillis = 200)
     )
 
     Row(
         modifier = modifier
-            .clickable(onClick = onClick, indication = null, interactionSource = remember { MutableInteractionSource() })
+            .clickable(
+                onClick = onClick,
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() })
             .padding(horizontal = 8.dp, vertical = 4.dp)
-            .background(color = backgroundColor, shape = if (isSelected) RoundedCornerShape(50.dp) else CircleShape)
+            .background(
+                color = backgroundColor,
+                shape = if (isSelected) RoundedCornerShape(50.dp) else CircleShape
+            )
             .padding(horizontal = if (isSelected) 12.dp else 0.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -75,9 +82,10 @@ fun CustomNavigationBarItem(
                 AppScreens.Home -> Icons.Filled.Home
                 AppScreens.Explore -> Icons.Filled.Search
                 AppScreens.Bookmarks -> Icons.Filled.Favorite
-                AppScreens.Profile -> Icons.Filled.Person
+                AppScreens.Setting -> Icons.Filled.Settings
+                else -> Icons.Filled.Home // Dummy
             },
-            contentDescription = null,
+            contentDescription = screen.name,
             modifier = Modifier.size(iconSize),
             tint = iconColor
         )
@@ -91,3 +99,4 @@ fun CustomNavigationBarItem(
         }
     }
 }
+

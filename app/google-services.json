@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "160033955155",
+    "project_id": "travel-mate-afc6e",
+    "storage_bucket": "travel-mate-afc6e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160033955155:android:8a71426e7009d94f8e55a6",
+        "android_client_info": {
+          "package_name": "com.example.flybooking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClyBhljHtMGdjH6cISiDIJzxih99MCBs0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
