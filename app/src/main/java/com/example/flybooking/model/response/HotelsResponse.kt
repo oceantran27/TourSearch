@@ -1,5 +1,6 @@
 package com.example.flybooking.model.response
 
+import com.example.flybooking.model.response.amadeus.GeoCode
 import kotlinx.serialization.Serializable
 
 @Serializable

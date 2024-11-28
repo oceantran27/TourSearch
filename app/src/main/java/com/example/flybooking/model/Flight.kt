@@ -1,6 +1,6 @@
 package com.example.flybooking.model
 
-import com.example.flybooking.model.response.ActivityPrice
+import com.example.flybooking.model.response.amadeus.ActivityPrice
 import kotlinx.serialization.Serializable
 
 @Serializable

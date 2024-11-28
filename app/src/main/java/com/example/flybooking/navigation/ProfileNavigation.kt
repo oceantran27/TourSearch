@@ -8,7 +8,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.flybooking.AppViewModelProvider
+import com.example.flybooking.activity.AppViewModelProvider
 import com.example.flybooking.ui.screens.profile.ChangePasswordScreen
 import com.example.flybooking.ui.screens.profile.EditProfileScreen
 import com.example.flybooking.ui.screens.profile.ProfileScreen

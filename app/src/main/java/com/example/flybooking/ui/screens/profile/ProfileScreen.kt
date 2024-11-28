@@ -53,8 +53,8 @@ import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.example.flybooking.AppViewModelProvider
-import com.example.flybooking.MainActivity
+import com.example.flybooking.activity.AppViewModelProvider
+import com.example.flybooking.activity.MainActivity
 import com.example.flybooking.R
 import com.example.flybooking.help.convertTimestampToDate
 import com.example.flybooking.ui.viewmodel.AuthState

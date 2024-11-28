@@ -2,19 +2,29 @@ package com.example.flybooking.repository
 
 import android.util.Log
 import com.example.flybooking.BuildConfig
-import com.example.flybooking.model.response.Activity
-import com.example.flybooking.model.response.FlightSearchResponse
-import com.example.flybooking.model.response.GeoCode
-import com.example.flybooking.model.response.Hotel
-import com.example.flybooking.model.response.HotelsResponse
-import com.example.flybooking.network.ApiService
+import com.example.flybooking.model.City
+import com.example.flybooking.model.response.amadeus.Activity
+import com.example.flybooking.model.response.amadeus.CityData
+import com.example.flybooking.model.response.amadeus.FlightSearchResponse
+import com.example.flybooking.model.response.amadeus.GeoCode
+import com.example.flybooking.model.response.amadeus.Transfer
+import com.example.flybooking.model.response.tripadvisor.DetailsResponse
+import com.example.flybooking.model.response.tripadvisor.Photo
+import com.example.flybooking.network.AmadeusApiService
+import com.example.flybooking.network.TransferRequest
+import com.example.flybooking.network.TripAdvisorApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody
 import retrofit2.Response
 import java.util.concurrent.TimeUnit
 
-class Repository(private val apiService: ApiService) {
+class Repository(
+    private val amadeusApiService: AmadeusApiService,
+    private val tripAdvisorApiService: TripAdvisorApiService
+) {
 
     private var accessToken: String? = null
     private var tokenExpirationTime: Long = 0
@@ -36,10 +46,10 @@ class Repository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun getAccessToken(callback: (String?, Long?, String?) -> Unit) {
+    private suspend fun getAccessToken(callback: (String?, Long?, String?) -> Unit) {
         withContext(Dispatchers.IO) {
             try {
-                val response = apiService.getAccessToken("client_credentials", buildAuthHeader())
+                val response = amadeusApiService.getAccessToken("client_credentials", buildAuthHeader())
                 if (response.isSuccessful) {
                     val accessToken = response.body()?.access_token
                     val expiresIn = response.body()?.expires_in
@@ -66,7 +76,7 @@ class Repository(private val apiService: ApiService) {
             val accessToken = getAccessTokenIfNeeded() ?: return@withContext null
 
             val response = retryWithDelay {
-                apiService.searchFlights(
+                amadeusApiService.searchFlights(
                     authorization = "Bearer $accessToken",
                     origin = departure,
                     destination = destination,
@@ -98,7 +108,7 @@ class Repository(private val apiService: ApiService) {
         return withContext(Dispatchers.IO) {
             val accessToken = getAccessTokenIfNeeded() ?: return@withContext null
             val response = retryWithDelay {
-                apiService.getLocation(
+                amadeusApiService.getLocation(
                     authorization = "Bearer $accessToken",
                     keyword = keyword
                 )
@@ -109,19 +119,50 @@ class Repository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun getHotelsByCity(cityCode: String): List<Hotel>? {
+    suspend fun getActivities(latitude: Double, longitude: Double): List<Activity>? {
         return withContext(Dispatchers.IO) {
             val accessToken = getAccessTokenIfNeeded() ?: return@withContext null
-
             val response = retryWithDelay {
-                apiService.getHotelByCity(
+                amadeusApiService.getActivities(
                     authorization = "Bearer $accessToken",
-                    cityCode = cityCode
+                    latitude = latitude,
+                    longitude = longitude
                 )
             }
-
             if (response?.isSuccessful == true) {
-                response.body()?.data // Trả về danh sách hotels từ HotelsResponse
+                response.body()?.data
+            } else {
+                null
+            }
+        }
+    }
+
+    suspend fun getTransferOffers(
+        startGeoCode: GeoCode,
+        endGeoCode: GeoCode,
+        countryCode: String,
+        startDateTime: String,
+        passengers: Int
+    ): List<Transfer>? {
+        return withContext(Dispatchers.IO) {
+            val accessToken = getAccessTokenIfNeeded() ?: return@withContext null
+            val transferRequest = TransferRequest(
+                startGeoCode = startGeoCode.toString(),
+                startCountryCode = countryCode,
+                endGeoCode = endGeoCode.toString(),
+                endCountryCode = countryCode,
+                startDateTime = startDateTime,
+                passengers = passengers
+            )
+            val response = amadeusApiService.searchTransferOffers(
+                authorization = "Bearer $accessToken",
+                transferRequest = RequestBody.create(
+                    "text/plain".toMediaType(),
+                    transferRequest.toString()
+                )
+            )
+            if (response.isSuccessful) {
+                response.body()?.data
             } else {
                 null
             }
@@ -129,14 +170,67 @@ class Repository(private val apiService: ApiService) {
     }
 
 
-    suspend fun getActivities(latitude: Double, longitude: Double): List<Activity>? {
+    suspend fun getCityData(
+        city: City
+    ): CityData? {
         return withContext(Dispatchers.IO) {
             val accessToken = getAccessTokenIfNeeded() ?: return@withContext null
             val response = retryWithDelay {
-                apiService.getActivities(
+                amadeusApiService.getCityData(
                     authorization = "Bearer $accessToken",
-                    latitude = latitude,
-                    longitude = longitude
+                    keyword = city.name,
+                    countryCode = city.countryCode
+                )
+            }
+            if (response?.isSuccessful == true) {
+                response.body()?.data?.firstOrNull()
+            } else {
+                null
+            }
+        }
+    }
+
+    suspend fun getNearbyIds(
+        cityData: CityData
+    ): List<String>? {
+        return withContext(Dispatchers.IO) {
+            val response = retryWithDelay {
+                tripAdvisorApiService.getNearbyIds(
+                    latLong = cityData.geoCode.toString()
+                )
+            }
+            if (response?.isSuccessful == true) {
+                response.body()?.data?.map { it.locationId }
+            } else {
+                null
+            }
+        }
+    }
+
+    suspend fun getTripAdvisorDetails(
+        locationId: String
+    ): DetailsResponse? {
+        return withContext(Dispatchers.IO) {
+            val response = retryWithDelay {
+                tripAdvisorApiService.getDetails(
+                    locationId = locationId
+                )
+            }
+            if (response?.isSuccessful == true) {
+                response.body()
+            } else {
+                null
+            }
+        }
+    }
+
+    suspend fun getTripAdvisorPhotos(
+        locationId: String
+    ): List<Photo>? {
+        return withContext(Dispatchers.IO) {
+            val response = retryWithDelay {
+                tripAdvisorApiService.getPhotos(
+                    locationId = locationId
                 )
             }
             if (response?.isSuccessful == true) {
@@ -150,7 +244,7 @@ class Repository(private val apiService: ApiService) {
 
 suspend fun <T> retryWithDelay(
     maxRetries: Int = 3,
-    delayMs: Long = 2000L,
+    delayMs: Long = 0L,
     apiCall: suspend () -> Response<T>
 ): Response<T>? {
     var currentAttempt = 0

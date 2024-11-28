@@ -53,7 +53,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.flybooking.AppViewModelProvider
+import com.example.flybooking.activity.AppViewModelProvider
 import com.example.flybooking.R
 import com.example.flybooking.help.convertTimestampToDate
 import com.example.flybooking.util2.DatePickerModal

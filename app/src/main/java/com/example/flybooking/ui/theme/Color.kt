@@ -17,3 +17,4 @@ val RoyalPurple = Color(0xFF64419F)
 val LightGrey = Color(0xFFB1B1B1)
 
 val ButtonBackground = Color(0xFF0080FF)
+val FlightCardBackground = Color(0xFFF0F0F0)
