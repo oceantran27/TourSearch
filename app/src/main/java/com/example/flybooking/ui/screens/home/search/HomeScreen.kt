@@ -18,17 +18,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flybooking.activity.AppViewModelProvider
+import com.example.flybooking.ui.viewmodel.AuthViewModel
 import com.example.flybooking.ui.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(
     //destination: City,
     homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    authViewModel: AuthViewModel = viewModel(factory = AppViewModelProvider.Factory),
     onSearchClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val homeUiState by homeViewModel.homeUiState.collectAsState()
     val errorMessage by homeViewModel.errorMessage.collectAsState()
+    val user by authViewModel.userStateFlow.collectAsState()
     val context = LocalContext.current
 
 //    // Cập nhật `destination` chỉ khi `destination` thay đổi
@@ -56,7 +59,7 @@ fun HomeScreen(
     ) {
         HeaderSection(
             painter = painterResource(id = homeUiState.bannerImageId),
-            name = homeUiState.bannerName,
+            name = "Welcome, ${user?.fullName ?: "Guest"} ",
             desc = homeUiState.bannerDesc
         )
         FlightBookingForm(
