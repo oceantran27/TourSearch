@@ -5,19 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.flybooking.firebase.AuthService
+import com.example.flybooking.firebase.FirestoreService
 import com.example.flybooking.model.User
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import java.text.SimpleDateFormat
-import java.util.Locale
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 sealed class AuthState {
     object Authenticated : AuthState()
@@ -26,11 +19,12 @@ sealed class AuthState {
     data class Error(val message: String) : AuthState()
 }
 
-class AuthViewModel : ViewModel() {
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+class AuthViewModel(
+    private val authService: AuthService,
+    private val firestoreService: FirestoreService
+) : ViewModel() {
     private val _authState = MutableLiveData<AuthState>(AuthState.UnAuthenticated)
     val authState: LiveData<AuthState> = _authState
-    val firestore = FirebaseFirestore.getInstance()
     private val _userStateFlow = MutableStateFlow<User?>(null)
     val userStateFlow: StateFlow<User?> get() = _userStateFlow
 
@@ -39,28 +33,52 @@ class AuthViewModel : ViewModel() {
     }
 
     fun getUserId(): String {
-        return auth.currentUser?.uid ?: ""
+        return authService.getCurrentUserId() ?: ""
     }
 
     fun isLoggedIn(): Boolean {
-        return auth.currentUser != null
+        return authService.isLoggedIn()
     }
 
     fun updateAuthStatus() {
-        if (auth.currentUser == null) {
-            _authState.value = AuthState.UnAuthenticated
-        } else {
+        if (authService.isLoggedIn()) {
             _authState.value = AuthState.Authenticated
             val userId = getUserId()
             viewModelScope.launch {
                 dbReadUser(userId)
             }
+        } else {
+            _authState.value = AuthState.UnAuthenticated
+        }
+    }
+
+    fun updateProfile(newUser: User) {
+        viewModelScope.launch {
+            try {
+                val updatedUser = dbUpdateUser(newUser)
+                if (updatedUser != null) {
+                    _userStateFlow.value = updatedUser
+                }
+            } catch (e: Exception) {
+                Log.e("AuthViewModel", "Error updating user profile", e)
+            }
+        }
+    }
+
+    private suspend fun dbUpdateUser(user: User): User? {
+        try {
+            firestoreService.updateUser(user)
+            return user
+            Log.d("AuthViewModel", "User data saved successfully for user ID: ${user.id}")
+        } catch (e: Exception) {
+            return null
+            Log.e("AuthViewModel", "Failed to save user data: ${e.message}", e)
         }
     }
 
     suspend fun dbCreateUser(user: User) {
         try {
-            firestore.collection("users").document(user.id).set(user).await()
+            firestoreService.createUser(user)
             Log.d("AuthViewModel", "User data saved successfully for user ID: ${user.id}")
         } catch (e: Exception) {
             Log.e("AuthViewModel", "Failed to save user data: ${e.message}", e)
@@ -69,9 +87,8 @@ class AuthViewModel : ViewModel() {
 
     suspend fun dbReadUser(userId: String) {
         try {
-            val document = firestore.collection("users").document(userId).get().await()
-            if (document.exists()) {
-                val user = document.toObject(User::class.java)
+            val user = firestoreService.readUser(userId)
+            if (user != null) {
                 _userStateFlow.value = user
             } else {
                 Log.d("AuthViewModel", "User not found")
@@ -83,33 +100,20 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun updateProfile(newUser: User) {
-        viewModelScope.launch {
-            try {
-                val updatedUser = dbUpdateUser(newUser)
-                _userStateFlow.value = updatedUser
-            } catch (e: Exception) {
-                Log.e("AuthViewModel", "Error updating user profile", e)
-            }
-        }
-    }
-
-    private suspend fun dbUpdateUser(user: User): User {
-        val userRef = FirebaseFirestore.getInstance().collection("users").document(user.id)
-        userRef.set(user).await()
-        return user
-    }
-
     suspend fun login(email: String, password: String) {
         _authState.value = AuthState.Loading
         try {
             if (email.isEmpty() || password.isEmpty()) {
                 _authState.value = AuthState.Error("Email or password cannot be empty")
             } else {
-                auth.signInWithEmailAndPassword(email, password).await()
-                _authState.value = AuthState.Authenticated
-                val userId = getUserId()
-                dbReadUser(userId)
+                val success = authService.signIn(email, password)
+                if (success) {
+                    _authState.value = AuthState.Authenticated
+                    val userId = getUserId()
+                    dbReadUser(userId)
+                } else {
+                    _authState.value = AuthState.Error("Login failed")
+                }
             }
         } catch (e: Exception) {
             _authState.value = AuthState.Error(e.message ?: "Login failed")
@@ -124,10 +128,14 @@ class AuthViewModel : ViewModel() {
             } else if (password.length < 6) {
                 _authState.value = AuthState.Error("Password should be at least 6 characters")
             } else {
-                auth.createUserWithEmailAndPassword(email, password).await()
-                _authState.value = AuthState.Authenticated
-                val userId = getUserId()
-                dbReadUser(userId)
+                val success = authService.signUp(email, password)
+                if (success) {
+                    _authState.value = AuthState.Authenticated
+                    val userId = getUserId()
+                    dbReadUser(userId)
+                } else {
+                    _authState.value = AuthState.Error("SignUp failed")
+                }
             }
         } catch (e: Exception) {
             _authState.value = AuthState.Error(e.message ?: "SignUp failed")
@@ -147,45 +155,12 @@ class AuthViewModel : ViewModel() {
             return Result.failure(Exception("Password should be at least 6 characters"))
         }
 
-        val user = auth.currentUser ?: return Result.failure(Exception("User not logged in"))
-
-        val credential = EmailAuthProvider.getCredential(user.email ?: "", currentPassword)
-
-        try {
-            val reauthResult = suspendCoroutine<Result<Unit>> { cont ->
-                user.reauthenticate(credential).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        user.updatePassword(newPassword).addOnCompleteListener { updateTask ->
-                            if (updateTask.isSuccessful) {
-                                cont.resume(Result.success(Unit))
-                            } else {
-                                cont.resume(
-                                    Result.failure(
-                                        updateTask.exception ?: Exception("Password update failed")
-                                    )
-                                )
-                            }
-                        }
-                    } else {
-                        cont.resume(
-                            Result.failure(
-                                task.exception ?: Exception("Incorrect current password")
-                            )
-                        )
-                    }
-                }
-            }
-
-            return reauthResult
-        } catch (e: Exception) {
-            return Result.failure(e)
-        }
+        return authService.changePassword(currentPassword, newPassword)
     }
-
 
     fun signOut() {
         _authState.value = AuthState.Loading
-        auth.signOut()
+        authService.signOut()
         _authState.value = AuthState.UnAuthenticated
     }
 }
