@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flybooking.activity.AppViewModelProvider
 import com.example.flybooking.model.SearchInputData
-import com.example.flybooking.model.response.Activity
-import com.example.flybooking.model.response.ActivityCard
+import com.example.flybooking.model.response.amadeus.Activity
+import com.example.flybooking.model.response.amadeus.ActivityCard
 import com.example.flybooking.ui.screens.others.LoadingAnimation
 import com.example.flybooking.ui.theme.ButtonBackground
 import com.example.flybooking.ui.viewmodel.ActivitiesUiState

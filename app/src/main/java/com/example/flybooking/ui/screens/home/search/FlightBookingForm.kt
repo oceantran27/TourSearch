@@ -17,9 +17,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.flybooking.activity.ResultActivity
-import com.example.flybooking.model.SearchInputData
+import com.example.flybooking.model.City
 import com.example.flybooking.ui.viewmodel.HomeViewModel
-import kotlinx.serialization.json.Json
+import com.example.flybooking.ui.viewmodel.SharedViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -27,8 +27,8 @@ import java.util.Locale
 @Composable
 fun FlightBookingForm(
     homeViewModel: HomeViewModel,
-    prePickedDeparture: String = "",
-    prePickedDestination: String = "",
+    //prePickedDeparture: City = City("", "", ""),
+    //prePickedDestination: City = City("", "", ""),
     modifier: Modifier = Modifier
 ) {
     val homeUiState by homeViewModel.homeUiState.collectAsState()
@@ -46,13 +46,13 @@ fun FlightBookingForm(
             onDepartureSelected = homeViewModel::updateDeparture,
             onDestinationSelected = homeViewModel::updateDestination,
             onDepartureInvalidOption = {
-                homeViewModel.updateDeparture("")
+                homeViewModel.updateDeparture(City("", "", ""))
             },
             onDestinationInvalidOption = {
-                homeViewModel.updateDestination("")
+                homeViewModel.updateDestination(City("", "", ""))
             },
-            prePickedDeparture = prePickedDeparture,
-            prePickedDestination = prePickedDestination
+            //prePickedDeparture = prePickedDeparture,
+            //prePickedDestination = prePickedDestination
         )
 
         // Ô nhập cho số lượng hành khách
@@ -81,18 +81,18 @@ fun FlightBookingForm(
         // Nút tìm kiếm
         SubmitButton(
             onClick = {
-                val searchData = SearchInputData(
+                SharedViewModel.set(
                     departure = homeUiState.departure,
                     destination = homeUiState.destination,
                     departureDate = formatDate(homeUiState.departureDate),
                     returnDate = formatDate(homeUiState.returnDate),
                     adults = homeUiState.passengerAdultCount,
                     children = homeUiState.passengerChildCount,
-                    budget = homeUiState.moneyAmount
+                    budget = homeUiState.moneyAmount.toInt()
                 )
-                val jsonString = Json.encodeToString(SearchInputData.serializer(), searchData)
+                //val jsonString = Json.encodeToString(SearchInputData.serializer(), searchData)
                 val intent = Intent(context, ResultActivity::class.java).apply {
-                    putExtra("search_input_data", jsonString)
+                    //putExtra("search_input_data", jsonString)
                 }
                 context.startActivity(intent)
             },

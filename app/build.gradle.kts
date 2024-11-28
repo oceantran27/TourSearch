@@ -1,9 +1,23 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
 }
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+
+if (localPropertiesFile.exists()) {
+    localProperties.load(FileInputStream(localPropertiesFile))
+}
+
+val amadeusAPI: String = localProperties.getProperty("API_KEY")
+val amadeusSecret: String = localProperties.getProperty("API_SECRET")
+val tripAPI: String = localProperties.getProperty("TRIP_API_KEY")
 
 android {
     namespace = "com.example.flybooking"
@@ -20,8 +34,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        buildConfigField("String", "API_KEY", "\"${project.findProperty("API_KEY")}\"")
-        buildConfigField("String", "API_SECRET", "\"${project.findProperty("API_SECRET")}\"")
+        buildConfigField("String", "API_KEY", "\"${amadeusAPI}\"")
+        buildConfigField("String", "API_SECRET", "\"${amadeusSecret}\"")
+        buildConfigField("String", "TRIP_API_KEY", "\"${tripAPI}\"")
     }
 
     buildTypes {
@@ -73,6 +88,9 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.3.1")
     implementation("com.exyte:animated-navigation-bar:1.0.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("io.coil-kt:coil-svg:2.2.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")

@@ -1,4 +1,4 @@
-package com.example.flybooking.model.response
+package com.example.flybooking.model.response.amadeus
 
 import kotlinx.serialization.Serializable
 

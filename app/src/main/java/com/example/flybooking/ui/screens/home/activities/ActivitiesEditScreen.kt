@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.flybooking.activity.ActivityDetailActivity
-import com.example.flybooking.model.response.Activity
-import com.example.flybooking.model.response.ActivityCard
+import com.example.flybooking.model.response.amadeus.Activity
+import com.example.flybooking.model.response.amadeus.ActivityCard
 import com.example.flybooking.ui.screens.others.SelectableCard
 import com.example.flybooking.ui.viewmodel.ActivitiesViewModel
 import kotlinx.serialization.json.Json

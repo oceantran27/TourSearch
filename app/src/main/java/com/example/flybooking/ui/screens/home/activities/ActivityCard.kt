@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.flybooking.activity.ActivityDetailActivity
-import com.example.flybooking.model.response.Activity
+import com.example.flybooking.model.response.amadeus.Activity
 import com.example.flybooking.ui.theme.ButtonBackground
 import kotlinx.serialization.json.Json
 

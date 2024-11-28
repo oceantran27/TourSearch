@@ -22,7 +22,7 @@ import com.example.flybooking.ui.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    destination: String = "",
+    //destination: City,
     homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
     onSearchClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -31,12 +31,12 @@ fun HomeScreen(
     val errorMessage by homeViewModel.errorMessage.collectAsState()
     val context = LocalContext.current
 
-    // Cập nhật `destination` chỉ khi `destination` thay đổi
-    LaunchedEffect(destination) {
-        if (destination.isNotEmpty()) {
-            homeViewModel.updateDestination(destination)
-        }
-    }
+//    // Cập nhật `destination` chỉ khi `destination` thay đổi
+//    LaunchedEffect(destination) {
+//        if (destination.name.isNotEmpty()) {
+//            homeViewModel.updateDestination(destination)
+//        }
+//    }
 
     // Hiển thị Toast khi có thông báo lỗi
     LaunchedEffect(errorMessage) {
@@ -61,11 +61,11 @@ fun HomeScreen(
         )
         FlightBookingForm(
             homeViewModel = homeViewModel,
-            prePickedDestination = if (homeUiState.destination.isNotEmpty()) {
-                homeUiState.destination
-            } else {
-                destination
-            }
+//            prePickedDestination = if (homeUiState.destination.name.isNotEmpty()) {
+//                homeUiState.destination
+//            } else {
+//                destination
+//            }
         )
 
         Spacer(modifier = Modifier.height(16.dp))

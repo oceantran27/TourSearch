@@ -7,22 +7,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import com.example.flybooking.R
+import com.example.flybooking.model.City
 
 @Composable
 fun DepartureAndDestinationInput(
-    onDepartureSelected: (String) -> Unit,
-    onDestinationSelected: (String) -> Unit,
+    onDepartureSelected: (City) -> Unit,
+    onDestinationSelected: (City) -> Unit,
     onDepartureInvalidOption: () -> Unit,
     onDestinationInvalidOption: () -> Unit,
-    prePickedDeparture: String,
-    prePickedDestination: String,
+//    prePickedDeparture: City,
+//    prePickedDestination: City,
     modifier: Modifier = Modifier
 ) {
     val departureCities = listOf(
-        "HAN"
+        City("Hanoi", "HAN", "VN"),
     )
     val destinationCities = listOf(
-        "PAR"
+        City("Paris", "PAR", "FR"),
     )
     // Dropdown có tìm kiếm cho các thành phố Departure
     LabeledField(label = "From") {
@@ -32,7 +33,7 @@ fun DepartureAndDestinationInput(
             onOptionSelected = { onDepartureSelected(it) },
             painter = painterResource(id = R.drawable.from_ic),
             onInvalidOption = onDepartureInvalidOption,
-            prePickedOption = prePickedDeparture,
+            //prePickedOption = prePickedDeparture,
             modifier = Modifier.fillMaxWidth().semantics {
                 contentDescription = "FROM_LABEL"
             }
@@ -47,7 +48,7 @@ fun DepartureAndDestinationInput(
             onOptionSelected = { onDestinationSelected(it) },
             painter = painterResource(id = R.drawable.to_ic),
             onInvalidOption = onDestinationInvalidOption,
-            prePickedOption = prePickedDestination,
+            //prePickedOption = prePickedDestination,
             modifier = Modifier.fillMaxWidth()
         )
     }

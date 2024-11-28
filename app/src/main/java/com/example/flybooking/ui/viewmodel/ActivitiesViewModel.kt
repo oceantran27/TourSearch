@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flybooking.model.response.Activity
-import com.example.flybooking.model.response.ActivityCard
+import com.example.flybooking.model.response.amadeus.Activity
+import com.example.flybooking.model.response.amadeus.ActivityCard
 import com.example.flybooking.repository.Repository
 import kotlinx.coroutines.launch
 
@@ -16,10 +16,9 @@ sealed interface ActivitiesUiState {
         val totalCost: Double = 0.0,
         val selected: List<Activity> = emptyList()
     ) : ActivitiesUiState
-    object Error : ActivitiesUiState
-    object Loading : ActivitiesUiState
+    data object Error : ActivitiesUiState
+    data object Loading : ActivitiesUiState
 }
-
 
 class ActivitiesViewModel(
     private val repository: Repository
@@ -32,13 +31,15 @@ class ActivitiesViewModel(
             activitiesUiState = ActivitiesUiState.Loading
             activitiesUiState = try {
                 val geocode = repository.getGeocodeFromIATA(destination)
-                var index = 0
                 geocode.let {
                     val activities = repository.getActivities(it!!.latitude, it.longitude)
-                    val validActivities = activities?.filter {
-                            activity -> activity.isValid()
-                    }?.sortedBy { activity -> activity.price?.amount?.toDoubleOrNull() }
-                        ?.map { activity -> ActivityCard(activity, (++index <= 3)) }?: emptyList()
+                    val validActivities = activities?.filter { activity -> activity.isValid() }
+                        ?.groupBy { activity -> activity.geoCode }
+                        ?.mapValues { (_, activities) -> activities.minByOrNull { it.price?.amount?.toDoubleOrNull() ?: Double.MAX_VALUE } }
+                        ?.values
+                        ?.sortedBy { activity -> activity?.price?.amount?.toDoubleOrNull() }
+                        ?.mapIndexed { index, activity -> ActivityCard(activity!!, (index < 5)) }
+                        ?: emptyList()
                     ActivitiesUiState.Success(
                         cards = validActivities,
                         selected = validActivities.filter { it.selected }.map { it.activity }

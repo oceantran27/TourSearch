@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.flybooking.R
-import com.example.flybooking.model.response.AirportInfo
-import com.example.flybooking.model.response.FlightOffer
-import com.example.flybooking.model.response.Itinerary
-import com.example.flybooking.model.response.Price
-import com.example.flybooking.model.response.Segment
+import com.example.flybooking.model.response.amadeus.AirportInfo
+import com.example.flybooking.model.response.amadeus.FlightOffer
+import com.example.flybooking.model.response.amadeus.Itinerary
+import com.example.flybooking.model.response.amadeus.Price
+import com.example.flybooking.model.response.amadeus.Segment
 import com.example.flybooking.ui.viewmodel.convertToUSD
 import kotlin.math.ceil
 

@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -28,17 +29,19 @@ import com.example.flybooking.activity.ActivitiesEditActivity
 import com.example.flybooking.activity.ActivityDetailActivity
 import com.example.flybooking.activity.AppViewModelProvider
 import com.example.flybooking.activity.FlightsEditActivity
-import com.example.flybooking.model.SearchInputData
-import com.example.flybooking.model.response.Activity
-import com.example.flybooking.model.response.ActivityCard
-import com.example.flybooking.model.response.FlightOffer
+import com.example.flybooking.activity.TransferSearchActivity
+import com.example.flybooking.model.response.amadeus.Activity
+import com.example.flybooking.model.response.amadeus.ActivityCard
+import com.example.flybooking.model.response.amadeus.FlightOffer
 import com.example.flybooking.ui.screens.home.activities.PreviewActivityCard
 import com.example.flybooking.ui.screens.home.flights.FlightOfferCard
+import com.example.flybooking.ui.screens.home.hotels.HotelCardPreview
 import com.example.flybooking.ui.screens.others.LoadingAnimation
 import com.example.flybooking.ui.viewmodel.ActivitiesUiState
 import com.example.flybooking.ui.viewmodel.ActivitiesViewModel
 import com.example.flybooking.ui.viewmodel.FlightUiState
 import com.example.flybooking.ui.viewmodel.FlightViewModel
+import com.example.flybooking.ui.viewmodel.HotelViewModel
 import com.example.flybooking.ui.viewmodel.SharedViewModel
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
@@ -48,27 +51,32 @@ fun ResultScene(
     modifier: Modifier = Modifier,
     activitiesViewModel: ActivitiesViewModel = viewModel(factory = AppViewModelProvider.Factory),
     flightViewModel: FlightViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    searchInputData: SearchInputData,
-//    intent: Intent? = null,
-//    limitCost: Double,
+    hotelViewModel: HotelViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     val coroutineScope = rememberCoroutineScope()
     val activitiesUiState = activitiesViewModel.activitiesUiState
     val flightsUiState = flightViewModel.flightUiState
+    //val hotelUiState = hotelViewModel.hotelUiState
     val context = LocalContext.current
 
-    val isLoading = (activitiesUiState is ActivitiesUiState.Loading
-            || flightsUiState is FlightUiState.Loading)
+    val isLoading = (
+            activitiesUiState is ActivitiesUiState.Loading
+            || flightsUiState is FlightUiState.Loading
+//            || hotelUiState is HotelUiState.Loading
+           )
 
-    val isError = (activitiesUiState is ActivitiesUiState.Error
-            || flightsUiState is FlightUiState.Error)
+    val isError = (
+            activitiesUiState is ActivitiesUiState.Error
+            || flightsUiState is FlightUiState.Error
+//            || hotelUiState is HotelUiState.Error
+            )
 
-    var activities: List<Activity> = if (activitiesUiState is ActivitiesUiState.Success) {
+    val activities: List<Activity> = if (activitiesUiState is ActivitiesUiState.Success) {
         activitiesUiState.selected
     } else {
         emptyList()
     }
-    var offer: FlightOffer = if (flightsUiState is FlightUiState.Success) {
+    val offer: FlightOffer = if (flightsUiState is FlightUiState.Success) {
         flightsUiState.selected ?: FlightOffer.empty()
     } else {
         FlightOffer.empty()
@@ -77,13 +85,32 @@ fun ResultScene(
     if (isError) {
         Text(text = "Error")
     } else if (isLoading) {
-        LoadingScene(modifier = modifier.fillMaxSize())
+        LoadingScene()
     } else {
         LazyColumn(
             modifier = modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // -------------------------- Flights -------------------------- //
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            item {
+                SectionHeader(
+                    title = "Flights",
+                    onEdit = {
+                        SharedViewModel.flightViewModel = flightViewModel
+                        val intent = Intent(context, FlightsEditActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            item {
+                FlightOfferCard(offer = offer)
+            }
+
             // -------------------------- Activities -------------------------- //
             item {
                 SectionHeader(
@@ -110,23 +137,34 @@ fun ResultScene(
                 )
             }
 
-            // -------------------------- Flights -------------------------- //
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-            }
+            // -------------------------- Hotels -------------------------- //
             item {
                 SectionHeader(
-                    title = "Flights",
-                    onEdit = {
-                        SharedViewModel.flightViewModel = flightViewModel
-                        val intent = Intent(context, FlightsEditActivity::class.java)
-                        context.startActivity(intent)
-                    },
+                    title = "Hotel",
+                    onEdit = {},
                     modifier = Modifier.fillMaxWidth()
                 )
             }
             item {
-                FlightOfferCard(offer = offer)
+//                HotelCard(
+//                    hotel = (hotelUiState as HotelUiState.Success).hotelList.first()
+//                )
+                HotelCardPreview()
+            }
+
+            // -------------------------- Proceed -------------------------- //
+            item {
+                Button(
+                    onClick = {
+                        SharedViewModel.hotelViewModel = hotelViewModel
+                        SharedViewModel.activitiesViewModel = activitiesViewModel
+                        val intent = Intent(context, TransferSearchActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(text = "Proceed")
+                }
             }
         }
     }
@@ -134,19 +172,24 @@ fun ResultScene(
     LaunchedEffect(Unit) {
         coroutineScope.launch {
             activitiesViewModel.searchActivities(
-                destination = searchInputData.destination
+                destination = SharedViewModel.destination!!.cityCode
             )
         }
         coroutineScope.launch {
             flightViewModel.searchFlights(
-                departure = searchInputData.departure,
-                destination = searchInputData.destination,
-                departureDate = searchInputData.departureDate,
-                returnDate = searchInputData.returnDate,
-                adults = searchInputData.adults,
-                children = searchInputData.children,
+                departure = SharedViewModel.departure!!.cityCode,
+                destination = SharedViewModel.destination!!.cityCode,
+                departureDate = SharedViewModel.departureDate!!,
+                returnDate = SharedViewModel.returnDate!!,
+                adults = SharedViewModel.adults,
+                children = SharedViewModel.children,
             )
         }
+//        coroutineScope.launch {
+//            hotelViewModel.searchHotels(
+//                destination = SharedViewModel.destination!!
+//            )
+//        }
     }
 }
 
@@ -155,7 +198,7 @@ fun LoadingScene(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         LoadingAnimation(

@@ -2,6 +2,7 @@ package com.example.flybooking.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.flybooking.R
+import com.example.flybooking.model.City
 import com.example.flybooking.repository.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,8 +18,8 @@ class HomeViewModel(
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
 
-    fun checkValidForm(departure: String, destination: String, moneyAmount: Double): Boolean {
-        return departure.isNotBlank() && destination.isNotBlank() && moneyAmount > 0.0
+    fun checkValidForm(departure: City, destination: City, moneyAmount: Double): Boolean {
+        return departure.name.isNotBlank() && destination.name.isNotBlank() && moneyAmount > 0.0
     }
 
     // Tăng số lượng hành khách người lớn
@@ -90,14 +91,14 @@ class HomeViewModel(
         _errorMessage.value = null
     }
 
-    fun updateDeparture(city: String) {
+    fun updateDeparture(city: City) {
         _homeUiState.update { it.copy(
             departure = city,
             isFormValid = checkValidForm(city, it.destination, it.moneyAmount)
         ) }
     }
 
-    fun updateDestination(city: String) {
+    fun updateDestination(city: City) {
         _homeUiState.update {
             it.copy(
                 destination = city,
@@ -124,8 +125,8 @@ data class HomeUiState(
     val bannerName: String = "FlyBooking",
     val bannerDesc: String = "Book your flight now",
     val bannerImageId: Int = R.drawable.profile,
-    val departure: String = "",
-    val destination: String = "",
+    val departure: City = City("", "", ""),
+    val destination: City = City("", "", ""),
     val passengerAdultCount: Int = 1,
     val passengerChildCount: Int = 1,
     val departureDate: Long = System.currentTimeMillis(),

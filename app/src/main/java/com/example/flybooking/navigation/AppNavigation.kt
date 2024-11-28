@@ -84,7 +84,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
                 )
             ) { backStackEntry ->
                 HomeScreen(
-                    destination = backStackEntry.arguments?.getString("destination") ?: "",
+                    //destination = backStackEntry.arguments?.getString("destination") ?: "",
                     modifier = Modifier.semantics { contentDescription = "HomeScreen" },
                     onSearchClick = {
 //                        navigateTo(AppScreens.SearchResults, AppScreens.SearchResults.name)

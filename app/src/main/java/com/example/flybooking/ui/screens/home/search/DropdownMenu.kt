@@ -25,20 +25,21 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.example.flybooking.model.City
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchableDropdownMenuField(
     label: String,
-    options: List<String>,
-    onOptionSelected: (String) -> Unit,
+    options: List<City>,
+    onOptionSelected: (City) -> Unit,
     onInvalidOption: () -> Unit,
     painter: Painter,
-    prePickedOption: String = "",
+    prePickedOption: City = City("", "", ""),
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var searchText by remember { mutableStateOf(prePickedOption) }
+    var searchText by remember { mutableStateOf(prePickedOption.cityCode) }
     var isValidOption by remember { mutableStateOf(true) }
     val focusManager = LocalFocusManager.current
 
@@ -87,25 +88,28 @@ fun SearchableDropdownMenuField(
             onDismissRequest = {
                 expanded = false
                 focusManager.clearFocus()
-                isValidOption = options.contains(searchText)
+                isValidOption = options.map { it.cityCode }.contains(searchText)
                 if (!isValidOption) {
                     onInvalidOption()
                 }
             }
         ) {
-            val filteredOptions = options.filter { it.contains(searchText, ignoreCase = true) }
+            val filteredOptions = options.filter {
+                it.cityCode.contains(searchText, ignoreCase = true)
+                        || it.name.contains(searchText, ignoreCase = true)
+            }
 
             filteredOptions.forEach { option ->
                 DropdownMenuItem(
-                    text = { Text(option) },
+                    text = { Text(option.name + " (" + option.cityCode + ")") },
                     onClick = {
-                        searchText = option
+                        searchText = option.cityCode
                         onOptionSelected(option)
                         expanded = false
                         focusManager.clearFocus()
                         isValidOption = true
                     },
-                    modifier = if (option == "NewYork") {
+                    modifier = if (option.name == "NewYork") {
                         Modifier.semantics {
                             contentDescription = "CITY_TAG"
                         }

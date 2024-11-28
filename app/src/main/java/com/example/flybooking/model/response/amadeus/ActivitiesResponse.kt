@@ -1,5 +1,6 @@
-package com.example.flybooking.model.response
+package com.example.flybooking.model.response.amadeus
 
+import com.example.flybooking.model.TransferLocInfo
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -22,6 +23,10 @@ data class Activity(
                 price?.isValid() == true &&
                 pictures?.isNotEmpty() == true
     }
+    fun toTransferLoc() = TransferLocInfo(
+        addressLine = name ?: "",
+        geoCode = geoCode ?: GeoCode(0.0, 0.0)
+    )
 }
 
 @Serializable

@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.flybooking.model.response.Activity
+import com.example.flybooking.model.response.amadeus.Activity
 
 @Composable
 fun ActivityDetailScreen(

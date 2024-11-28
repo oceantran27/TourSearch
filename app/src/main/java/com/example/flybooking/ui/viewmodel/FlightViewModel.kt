@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flybooking.model.response.FlightOffer
+import com.example.flybooking.model.response.amadeus.FlightOffer
 import com.example.flybooking.repository.Repository
 import kotlinx.coroutines.launch
 
