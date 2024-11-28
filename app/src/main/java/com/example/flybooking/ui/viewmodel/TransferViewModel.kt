@@ -27,7 +27,7 @@ sealed interface TransferUiState {
 class TransferViewModel(
     val repository: Repository
 ) : ViewModel() {
-    var transferUiState: TransferUiState by mutableStateOf(TransferUiState.Success(emptyList()))
+    var transferUiState: TransferUiState by mutableStateOf(TransferUiState.Loading)
         private set
 
     fun searchTransfers(

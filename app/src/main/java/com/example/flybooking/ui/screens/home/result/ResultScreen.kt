@@ -35,12 +35,13 @@ import com.example.flybooking.model.response.amadeus.ActivityCard
 import com.example.flybooking.model.response.amadeus.FlightOffer
 import com.example.flybooking.ui.screens.home.activities.PreviewActivityCard
 import com.example.flybooking.ui.screens.home.flights.FlightOfferCard
-import com.example.flybooking.ui.screens.home.hotels.HotelCardPreview
+import com.example.flybooking.ui.screens.home.hotels.HotelCard
 import com.example.flybooking.ui.screens.others.LoadingAnimation
 import com.example.flybooking.ui.viewmodel.ActivitiesUiState
 import com.example.flybooking.ui.viewmodel.ActivitiesViewModel
 import com.example.flybooking.ui.viewmodel.FlightUiState
 import com.example.flybooking.ui.viewmodel.FlightViewModel
+import com.example.flybooking.ui.viewmodel.HotelUiState
 import com.example.flybooking.ui.viewmodel.HotelViewModel
 import com.example.flybooking.ui.viewmodel.SharedViewModel
 import kotlinx.coroutines.launch
@@ -56,19 +57,19 @@ fun ResultScene(
     val coroutineScope = rememberCoroutineScope()
     val activitiesUiState = activitiesViewModel.activitiesUiState
     val flightsUiState = flightViewModel.flightUiState
-    //val hotelUiState = hotelViewModel.hotelUiState
+    val hotelUiState = hotelViewModel.hotelUiState
     val context = LocalContext.current
 
     val isLoading = (
             activitiesUiState is ActivitiesUiState.Loading
             || flightsUiState is FlightUiState.Loading
-//            || hotelUiState is HotelUiState.Loading
+            || hotelUiState is HotelUiState.Loading
            )
 
     val isError = (
             activitiesUiState is ActivitiesUiState.Error
             || flightsUiState is FlightUiState.Error
-//            || hotelUiState is HotelUiState.Error
+            || hotelUiState is HotelUiState.Error
             )
 
     val activities: List<Activity> = if (activitiesUiState is ActivitiesUiState.Success) {
@@ -146,10 +147,10 @@ fun ResultScene(
                 )
             }
             item {
-//                HotelCard(
-//                    hotel = (hotelUiState as HotelUiState.Success).hotelList.first()
-//                )
-                HotelCardPreview()
+                HotelCard(
+                    hotel = (hotelUiState as HotelUiState.Success).hotelList.first()
+                )
+//                HotelCardPreview()
             }
 
             // -------------------------- Proceed -------------------------- //
@@ -185,11 +186,11 @@ fun ResultScene(
                 children = SharedViewModel.children,
             )
         }
-//        coroutineScope.launch {
-//            hotelViewModel.searchHotels(
-//                destination = SharedViewModel.destination!!
-//            )
-//        }
+        coroutineScope.launch {
+            hotelViewModel.searchHotels(
+                destination = SharedViewModel.destination!!
+            )
+        }
     }
 }
 

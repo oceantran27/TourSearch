@@ -25,8 +25,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.flybooking.navigation.bottombar.droplet.AnimatedBottomBar
-import com.example.flybooking.ui.screens.explore.ExploreScreen
-import com.example.flybooking.ui.screens.home.HomeScreen
 import com.example.flybooking.ui.screens.home.search.HomeScreen
 
 @Composable
@@ -86,7 +84,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
                 )
             ) { backStackEntry ->
                 HomeScreen(
-                    destination = backStackEntry.arguments?.getString("destination") ?: "",
+                    //destination = backStackEntry.arguments?.getString("destination") ?: "",
                     modifier = Modifier.semantics { contentDescription = "HomeScreen" },
                     onSearchClick = {
 //                        navigateTo(AppScreens.SearchResults, AppScreens.SearchResults.name)
@@ -94,8 +92,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
                 )
             }
             composable(AppScreens.Explore.name) {
-//                ScreenPlaceholder(screenName = AppScreens.Explore.name)
-                ExploreScreen()
+                ScreenPlaceholder(screenName = AppScreens.Explore.name)
             }
             composable(AppScreens.Bookmarks.name) {
                 ScreenPlaceholder(screenName = AppScreens.Bookmarks.name)

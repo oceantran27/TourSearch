@@ -23,7 +23,7 @@ sealed interface ActivitiesUiState {
 class ActivitiesViewModel(
     private val repository: Repository
 ) : ViewModel() {
-    var activitiesUiState: ActivitiesUiState by mutableStateOf(ActivitiesUiState.Success())
+    var activitiesUiState: ActivitiesUiState by mutableStateOf(ActivitiesUiState.Loading)
         private set
 
     fun searchActivities(destination: String) {

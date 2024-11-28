@@ -44,7 +44,7 @@ sealed interface HotelUiState {
 class HotelViewModel(
     private val repository: Repository
 ) : ViewModel() {
-    var hotelUiState: HotelUiState by mutableStateOf(HotelUiState.Success(emptyList()))
+    var hotelUiState: HotelUiState by mutableStateOf(HotelUiState.Loading)
         private set
 
     fun searchHotels(destination: City) {
