@@ -26,6 +26,11 @@ class ActivitiesViewModel(
     var activitiesUiState: ActivitiesUiState by mutableStateOf(ActivitiesUiState.Loading)
         private set
 
+    fun setTestUiState(state: ActivitiesUiState) {
+        activitiesUiState = state
+    }
+
+
     fun searchActivities(destination: String) {
         viewModelScope.launch {
             activitiesUiState = ActivitiesUiState.Loading
