@@ -1,4 +1,4 @@
-package com.example.flybooking.ui.screens.home.search
+package com.example.flybooking.ui.screens.home.input
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable

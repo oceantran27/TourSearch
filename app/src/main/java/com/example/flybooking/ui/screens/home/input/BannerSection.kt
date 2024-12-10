@@ -1,4 +1,4 @@
-package com.example.flybooking.ui.screens.home.search
+package com.example.flybooking.ui.screens.home.input
 
 import android.content.Intent
 import androidx.compose.foundation.BorderStroke

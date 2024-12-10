@@ -1,4 +1,4 @@
-package com.example.flybooking.ui.screens.home.search
+package com.example.flybooking.ui.screens.home.input
 
 import android.app.DatePickerDialog
 import androidx.compose.foundation.background
