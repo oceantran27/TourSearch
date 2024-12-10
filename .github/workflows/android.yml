@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,26 +22,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: gradle
-
-    # Cache Gradle dependencies
-    - name: Cache Gradle
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
-
-    # Cache Android Emulator System Images
-    - name: Cache Android Emulator System Images
-      uses: actions/cache@v3
-      with:
-        path: $ANDROID_HOME/system-images
-        key: ${{ runner.os }}-android-emulator-${{ hashFiles('**/build.gradle', '**/build.gradle.kts') }}
-        restore-keys: |
-          ${{ runner.os }}-android-emulator-
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v2
@@ -60,13 +39,15 @@ jobs:
       run: ./gradlew dependencies
 
     - name: Start Emulator
-      run: |
-        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-34;default;x86_64"
-        echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-34;default;x86_64" --force
-        $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -no-boot-anim &
-        adb wait-for-device
-        sleep 30
-        adb shell input keyevent 82
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 34
+        target: default
+        arch: x86_64
+        profile: pixel_5
+        script: ./gradlew connectedAndroidTest
+        disable-animations: true
+        emulator-options: "-no-boot-anim -no-window"
 
     - name: Build with Gradle
       run: ./gradlew build
