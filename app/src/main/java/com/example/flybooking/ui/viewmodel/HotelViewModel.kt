@@ -15,8 +15,10 @@ import com.example.flybooking.repository.Repository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 import java.lang.Double.parseDouble
 
+@Serializable
 data class HotelObject(
     val cityName: String = "",
     val cityGeoCode: GeoCode = GeoCode(0.0, 0.0),

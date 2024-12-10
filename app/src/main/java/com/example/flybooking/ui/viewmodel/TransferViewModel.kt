@@ -12,7 +12,9 @@ import com.example.flybooking.repository.Repository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class TransferObject(
     val info: TransferInfo,
     val result: Transfer
