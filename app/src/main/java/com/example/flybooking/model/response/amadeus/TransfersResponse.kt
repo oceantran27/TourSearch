@@ -15,7 +15,9 @@ data class Transfer(
     val serviceProvider: ServiceProvider,
     val converted: Converted,
     val methodsOfPaymentAccepted: List<String>? = null,
-)
+) {
+    constructor(): this("0", "transferType", Vehicle("description", null, emptyList()), ServiceProvider("code", "name", "logoUrl"), Converted("0.0", "currencyCode"), emptyList())
+}
 
 @Serializable
 data class Vehicle(

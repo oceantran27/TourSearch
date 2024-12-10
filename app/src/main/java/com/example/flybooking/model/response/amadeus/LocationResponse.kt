@@ -22,6 +22,7 @@ data class GeoCode(
     val latitude: Double,
     val longitude: Double
 ): Parcelable {
+    constructor(): this(0.0, 0.0)
     override fun toString(): String {
         return "$latitude,$longitude"
     }

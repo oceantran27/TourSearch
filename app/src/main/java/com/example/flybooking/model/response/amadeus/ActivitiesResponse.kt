@@ -16,6 +16,7 @@ data class Activity(
     val price: ActivityPrice? = null,
     val pictures: List<String>? = null
 ){
+    constructor() : this(null, null, null, null, null)
     fun isValid(): Boolean {
         return !name.isNullOrEmpty() &&
                 !description.isNullOrEmpty() &&
@@ -34,6 +35,7 @@ data class ActivityPrice(
     val amount: String? = null,
     val currencyCode: String? = null
 ){
+    constructor() : this(null, null)
     override fun toString(): String {
         return "$amount $currencyCode"
     }

@@ -18,7 +18,9 @@ import kotlinx.serialization.Serializable
 data class TransferObject(
     val info: TransferInfo,
     val result: Transfer
-)
+) {
+    constructor() : this(TransferInfo(), Transfer())
+}
 
 sealed interface TransferUiState {
     data object Loading : TransferUiState
