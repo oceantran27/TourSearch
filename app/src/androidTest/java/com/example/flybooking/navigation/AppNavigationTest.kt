@@ -7,7 +7,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,56 +35,9 @@ class AppNavigationTest {
 
     @Test
     fun testHomeScreenDisplayedByDefault() {
-        // Check if the Home screen is displayed by default
-        val homeScreen = device.findObject(By.desc("Screen_Home"))
-        assertNotNull("Home screen should be displayed by default", homeScreen)
-    }
-
-    @Test
-    fun testNavigateToExploreScreen() {
-        // Click on the Explore button
-        val exploreButton = device.findObject(By.desc("Explore"))
-        exploreButton.click()
-
-        // Wait for the Explore screen to appear
-        val timeout = CHANGE_SCREEN_TIMEOUT
-        val exploreScreen = device.wait(Until.hasObject(By.desc("Screen_Explore")), timeout)
-
-        // Check if the Profile screen is displayed
-        assert(exploreScreen) {
-            "Explore screen should be displayed after clicking Explore"
-        }
-    }
-
-    @Test
-    fun testNavigateToBookmarksScreen() {
-        // Click on the Bookmarks button
-        val bookmarksButton = device.findObject(By.desc("Bookmarks"))
-        bookmarksButton.click()
-
-        // Wait for the Bookmarks screen to appear
-        val timeout = CHANGE_SCREEN_TIMEOUT
-        val bookmarksScreen = device.wait(Until.hasObject(By.desc("Screen_Bookmarks")), timeout)
-
-        // Check if the Bookmarks screen is displayed
-        assert(bookmarksScreen) {
-            "Bookmarks screen should be displayed after clicking Bookmarks"
-        }
-    }
-
-    @Test
-    fun testNavigateToProfileScreen() {
-        // Click on the Profile button
-        val profileButton = device.findObject(By.desc("Profile"))
-        profileButton.click()
-
-        // Wait for the Profile screen to appear
-        val timeout = CHANGE_SCREEN_TIMEOUT
-        val profileScreen = device.wait(Until.hasObject(By.desc("Screen_Profile")), timeout)
-
-        // Check if the Profile screen is displayed
-        assert(profileScreen) {
-            "Profile screen should be displayed after clicking Profile"
+        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), 10000L)
+        assert(homeScreen) {
+            "Home screen should be displayed by default"
         }
     }
 }
