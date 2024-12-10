@@ -13,9 +13,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew   
-    - name: set up JDK 17
+
+    - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
@@ -28,12 +30,18 @@ jobs:
         api-level: 34
         build-tools: 34.0.0
 
+    - name: Create local.properties file with secrets
+      run: |
+        echo "API_KEY=${{ secrets.API_KEY }}" >> local.properties
+        echo "API_SECRET=${{ secrets.API_SECRET }}" >> local.properties
+        echo "TRIP_API_KEY=${{ secrets.TRIP_API_KEY }}" >> local.properties
+
     - name: Install dependencies
       run: ./gradlew dependencies
-      
+
     - name: Build with Gradle
       run: ./gradlew build
-      
+
     - name: Run Unit Tests
       run: ./gradlew test
 
