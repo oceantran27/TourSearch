@@ -1,4 +1,4 @@
-package com.example.flybooking.ui.screens.home.search
+package com.example.flybooking.ui.screens.home.input
 
 import android.content.Intent
 import androidx.compose.foundation.background
@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.flybooking.activity.ResultActivity
+import com.example.flybooking.activity.SearchFlightHotelAndActivitiesActivity
 import com.example.flybooking.model.City
 import com.example.flybooking.ui.viewmodel.HomeViewModel
 import com.example.flybooking.ui.viewmodel.SharedViewModel
@@ -91,7 +91,7 @@ fun FlightBookingForm(
                     budget = homeUiState.moneyAmount.toInt()
                 )
                 //val jsonString = Json.encodeToString(SearchInputData.serializer(), searchData)
-                val intent = Intent(context, ResultActivity::class.java).apply {
+                val intent = Intent(context, SearchFlightHotelAndActivitiesActivity::class.java).apply {
                     //putExtra("search_input_data", jsonString)
                 }
                 context.startActivity(intent)

@@ -1,5 +1,6 @@
 package com.example.flybooking.ui.screens.home.transfer
 
+import android.content.Intent
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -22,11 +24,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flybooking.activity.AppViewModelProvider
+import com.example.flybooking.activity.ShowResultActivity
 import com.example.flybooking.model.TransferInfo
 import com.example.flybooking.model.TransferLocInfo
 import com.example.flybooking.model.response.amadeus.Converted
@@ -36,7 +40,7 @@ import com.example.flybooking.model.response.amadeus.ServiceProvider
 import com.example.flybooking.model.response.amadeus.Transfer
 import com.example.flybooking.model.response.amadeus.Vehicle
 import com.example.flybooking.ui.screens.home.hotels.hotelMock
-import com.example.flybooking.ui.screens.home.result.LoadingScene
+import com.example.flybooking.ui.screens.home.search.LoadingScene
 import com.example.flybooking.ui.viewmodel.ActivitiesUiState
 import com.example.flybooking.ui.viewmodel.SharedViewModel
 import com.example.flybooking.ui.viewmodel.TransferUiState
@@ -52,13 +56,15 @@ fun TransferSearchScreen(
     val activities = (SharedViewModel.activitiesViewModel?.activitiesUiState as? ActivitiesUiState.Success)?.selected?.map { it.toTransferLoc() }!!
     val inputs = ArrayList<TransferInfo>()
     activities.forEach { activity ->
-        inputs.add(TransferInfo(hotel, activity, "2024-12-10T10:29:45"))
+        inputs.add(TransferInfo(hotel, activity, "2025-01-10T10:29:45"))
     }
 
     val transferUiState = transferViewModel.transferUiState
 
     val isLoading = transferUiState is TransferUiState.Loading
     val isError = transferUiState is TransferUiState.Error
+
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         val countryCode = SharedViewModel.destination!!.countryCode
@@ -80,6 +86,18 @@ fun TransferSearchScreen(
                     transfer = transferObject.result,
                     info = transferObject.info
                 )
+            }
+            item {
+                Button(
+                    onClick = {
+                        SharedViewModel.transferViewModel = transferViewModel
+                        val intent = Intent(context, ShowResultActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Text("Show Result")
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.flybooking.ui.screens.home.search
+package com.example.flybooking.ui.screens.home.input
 
 import android.content.Intent
 import androidx.compose.foundation.BorderStroke
@@ -24,13 +24,15 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.flybooking.R
 import com.example.flybooking.activity.AppViewModelProvider
 import com.example.flybooking.activity.LoginActivity
 import com.example.flybooking.activity.ProfileActivity
-import com.example.flybooking.R
 import com.example.flybooking.ui.theme.ButtonBackground
 import com.example.flybooking.ui.viewmodel.AuthViewModel
 
@@ -47,7 +49,10 @@ fun HeaderSection(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(bottomStartPercent = 20, bottomEndPercent = 20))
-            .background(ButtonBackground),
+            .background(ButtonBackground)
+            .semantics {
+                contentDescription = "HOME_SCREEN"
+            },
         contentAlignment = Alignment.Center
     ) {
         Image(

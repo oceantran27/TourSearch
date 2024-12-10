@@ -25,6 +25,7 @@ data class HotelObject(
     val details: DetailsResponse ?= null,
     val photos: List<Photo> = emptyList()
 ) {
+    constructor(): this("", GeoCode(0.0, 0.0), null, emptyList())
     fun toTransferLoc() = TransferLocInfo(
         addressLine = details?.name.toString(),
         geoCode = GeoCode(

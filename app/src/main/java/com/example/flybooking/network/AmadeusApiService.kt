@@ -1,6 +1,5 @@
 package com.example.flybooking.network
 
-import android.util.Log
 import com.example.flybooking.model.response.amadeus.AccessTokenResponse
 import com.example.flybooking.model.response.amadeus.ActivitiesResponse
 import com.example.flybooking.model.response.amadeus.CityResponse
@@ -15,7 +14,6 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -59,7 +57,6 @@ interface AmadeusApiService {
     ): Response<ActivitiesResponse>
 
     // Tìm kiếm phương tiện di chuyển
-    @Headers("Content-Type: text/plain")
     @POST("v1/shopping/transfer-offers")
     suspend fun searchTransferOffers(
         @Header("Authorization") authorization: String,
@@ -96,8 +93,8 @@ data class TransferRequest(
     val passengers: Int
 ) {
     override fun toString(): String {
-        val res = "{\"startGeoCode\":\"48.85657,2.356067\",\"startAddressLine\":\"start\",\"startCountryCode\":\"FR\",\"endGeoCode\":\"48.85693,2.3412\",\"endAddressLine\":\"end\",\"endCountryCode\":\"FR\",\"startDateTime\":\"2024-12-10T10:29:45\",\"passengers\":2}"
-        Log.d("TransferRequest", res)
-        return res
+        // Format:
+        // {"startGeoCode":"48.85657,2.356067","startAddressLine":"start","startCountryCode":"FR","endGeoCode":"48.85693,2.3412","endAddressLine":"end","endCountryCode":"FR","startDateTime":"2024-12-10T10:29:45","passengers":2}
+        return "{\"startGeoCode\":\"$startGeoCode\",\"startAddressLine\":\"$startAddressLine\",\"startCountryCode\":\"$startCountryCode\",\"endGeoCode\":\"$endGeoCode\",\"endAddressLine\":\"$endAddressLine\",\"endCountryCode\":\"$endCountryCode\",\"startDateTime\":\"$startDateTime\",\"passengers\":$passengers}"
     }
 }

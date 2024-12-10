@@ -157,7 +157,7 @@ class Repository(
             val response = amadeusApiService.searchTransferOffers(
                 authorization = "Bearer $accessToken",
                 transferRequest = RequestBody.create(
-                    "text/plain".toMediaType(),
+                    "application/json".toMediaType(),
                     transferRequest.toString()
                 )
             )

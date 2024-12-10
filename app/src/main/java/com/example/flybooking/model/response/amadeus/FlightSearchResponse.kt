@@ -15,6 +15,7 @@ data class FlightOffer(
     val validatingAirlineCodes: List<String>? = null
 //    val travelerPricings: List<TravelerPricing>
 ) {
+    constructor(): this("0", emptyList(), Price("USD", "0.0", "0.0"), emptyList())
     companion object {
         fun empty() = FlightOffer(
             id = "0",
