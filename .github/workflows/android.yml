@@ -42,7 +42,7 @@ jobs:
     - name: Start Emulator
       run: |
         echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-34;default;x86_64"
-        $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-34;default;x86_64" --force
+        echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-34;default;x86_64" --force
         $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -no-boot-anim &
         adb wait-for-device
         sleep 30
