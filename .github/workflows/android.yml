@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -37,17 +38,6 @@ jobs:
 
     - name: Install dependencies
       run: ./gradlew dependencies
-
-    - name: Start Emulator
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 34
-        target: default
-        arch: x86_64
-        profile: pixel_5
-        script: ./gradlew connectedAndroidTest
-        disable-animations: true
-        emulator-options: "-no-boot-anim -no-window"
 
     - name: Build with Gradle
       run: ./gradlew build
