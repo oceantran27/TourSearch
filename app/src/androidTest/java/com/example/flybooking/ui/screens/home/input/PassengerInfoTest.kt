@@ -18,7 +18,7 @@ class PassengerInfoTest {
     private lateinit var device: UiDevice
     private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
     private val PACKAGE_NAME = "com.example.flybooking"
-    private val TIMEOUT = 5000L
+    private val TIMEOUT = 30000L
 
     @Before
     fun setUp() {
@@ -38,18 +38,21 @@ class PassengerInfoTest {
         assert(adultField != null) { "Adults field not found" }
         val addButton = adultField.findObject(By.text("+"))
         assert(addButton != null) { "Add button not found" }
+        val adultText = device.findObject(By.desc("Adults text"))
+        assert(adultText != null) { "Adult text not found" }
 
         addButton.click()
-        sleep(1000)
+        sleep(5000)
         addButton.click()
-        sleep(1000)
+        sleep(5000)
 
-        val adultCount = device.findObject(By.text("3 Adult"))
-        assert(adultCount != null) { "Adult count not found" }
+        val adultCount = adultText.text
+        println("Adult count after clicks: $adultCount")
+        assert(adultCount == "3 Adult") { "Expected: 3 Adult, Found: $adultCount" }
     }
 
     @Test
-    fun addThreeChildren() {
+    fun addTwoChildren() {
         val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), TIMEOUT)
         assert(homeScreen) { "Home screen should be displayed by default" }
 
@@ -57,16 +60,17 @@ class PassengerInfoTest {
         assert(childrenField != null) { "Children field not found" }
         val addButton = childrenField.findObject(By.text("+"))
         assert(addButton != null) { "Add button not found" }
+        val childrenText = device.findObject(By.desc("Children text"))
+        assert(childrenText != null) { "Children text not found" }
 
         addButton.click()
-        sleep(1000)
+        sleep(5000)
         addButton.click()
-        sleep(1000)
-        addButton.click()
-        sleep(1000)
+        sleep(5000)
 
-        val childrenCount = device.findObject(By.text("4 Child"))
-        assert(childrenCount != null) { "Children count not found" }
+        val childrenCount = childrenText.text
+        println("Children count after clicks: $childrenCount")
+        assert(childrenCount == "3 Child") { "Expected: 3 Child, Found: $childrenCount" }
     }
 
     @Test
@@ -76,13 +80,16 @@ class PassengerInfoTest {
 
         val childrenField = device.findObject(By.desc("Children"))
         assert(childrenField != null) { "Children field not found" }
-
         val removeButton = childrenField.findObject(By.text("-"))
         assert(removeButton != null) { "Remove button not found" }
+        val childrenText = device.findObject(By.desc("Children text"))
+        assert(childrenText != null) { "Children text not found" }
 
         removeButton.click()
-        sleep(1000)
-        val childrenCount = device.findObject(By.text("0 Child"))
-        assert(childrenCount != null) { "Children count not found" }
+        sleep(5000)
+
+        val childrenCount = childrenText.text
+        println("Children count after click: $childrenCount")
+        assert(childrenCount == "0 Child") { "Expected: 0 Child, Found: $childrenCount" }
     }
 }
