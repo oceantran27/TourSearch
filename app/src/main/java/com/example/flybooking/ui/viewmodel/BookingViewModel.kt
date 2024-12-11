@@ -8,12 +8,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flybooking.firebase.FirestoreService
 import com.example.flybooking.model.Booking
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 sealed class BookingState {
-    object Loading : BookingState()
+    data object Loading : BookingState()
+    data object Empty : BookingState()
     data class Success(val message: String) : BookingState()
     data class Error(val message: String) : BookingState()
     data class BookingDetails(val booking: Booking) : BookingState()
@@ -23,7 +24,7 @@ class BookingViewModel(
     private val firestoreService: FirestoreService
 ) : ViewModel() {
 
-    private val _bookingState = MutableLiveData<BookingState>(BookingState.Loading)
+    private val _bookingState = MutableLiveData<BookingState>(BookingState.Empty)
     val bookingState: LiveData<BookingState> = _bookingState
 
     private val _bookingDetailsStateFlow = MutableStateFlow<Booking?>(null)
@@ -34,6 +35,8 @@ class BookingViewModel(
         viewModelScope.launch {
             try {
                 val bookingId = firestoreService.createBooking(booking)
+                // Log the booking ID for debugging purposes
+                Log.d("BookingViewModel", "Booking created with ID: $bookingId")
                 _bookingState.value = BookingState.Success("Booking created with ID: $bookingId")
             } catch (e: Exception) {
                 _bookingState.value = BookingState.Error("Error creating booking: ${e.message}")

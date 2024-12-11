@@ -8,12 +8,11 @@ import com.example.flybooking.firebase.FirebaseAuthService
 import com.example.flybooking.firebase.FirebaseFirestoreService
 import com.example.flybooking.ui.viewmodel.ActivitiesViewModel
 import com.example.flybooking.ui.viewmodel.AuthViewModel
+import com.example.flybooking.ui.viewmodel.BookingViewModel
 import com.example.flybooking.ui.viewmodel.FlightViewModel
 import com.example.flybooking.ui.viewmodel.HomeViewModel
 import com.example.flybooking.ui.viewmodel.HotelViewModel
 import com.example.flybooking.ui.viewmodel.TransferViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -45,6 +44,11 @@ object AppViewModelProvider {
         initializer {
             AuthViewModel(
                 authService = FirebaseAuthService(),
+                firestoreService = FirebaseFirestoreService()
+            )
+        }
+        initializer {
+            BookingViewModel(
                 firestoreService = FirebaseFirestoreService()
             )
         }
