@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flybooking.firebase.AuthService
 import com.example.flybooking.firebase.FirestoreService
+import com.example.flybooking.model.Booking
 import com.example.flybooking.model.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,6 +28,9 @@ class AuthViewModel(
     val authState: LiveData<AuthState> = _authState
     private val _userStateFlow = MutableStateFlow<User?>(null)
     val userStateFlow: StateFlow<User?> get() = _userStateFlow
+
+    private val _addBookingState = MutableLiveData<BookingState>()
+    val addBookingState: LiveData<BookingState> = _addBookingState
 
     init {
         updateAuthStatus()
@@ -162,5 +166,31 @@ class AuthViewModel(
         _authState.value = AuthState.Loading
         authService.signOut()
         _authState.value = AuthState.UnAuthenticated
+    }
+
+    suspend fun addHistoryBooking(booking: Booking) {
+        _addBookingState.value = BookingState.Loading
+        val userId = getUserId()
+        if (userId.isNotEmpty()) {
+            try {
+                val bookingId = firestoreService.createBooking(booking)
+
+                val user = firestoreService.readUser(userId)
+                if (user != null) {
+                    val updatedBookingHistory = user.bookingHistory.toMutableList().apply {
+                        add(bookingId)
+                    }
+
+                    val updatedUser = user.copy(bookingHistory = updatedBookingHistory)
+                    firestoreService.updateUser(updatedUser)
+                    Log.d("AuthViewModel", "Booking added to history successfully")
+                    _addBookingState.value =
+                        BookingState.Success("Booking added to history successfully")
+                }
+            } catch (e: Exception) {
+                Log.e("AuthViewModel", "Error adding booking to history", e)
+                _addBookingState.value = BookingState.Error(e.message ?: "Error adding booking")
+            }
+        }
     }
 }

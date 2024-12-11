@@ -1,6 +1,5 @@
 package com.example.flybooking.ui.viewmodel
 
-
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +10,8 @@ import com.example.flybooking.model.Booking
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 sealed class BookingState {
     data object Loading : BookingState()
@@ -20,8 +21,16 @@ sealed class BookingState {
     data class BookingDetails(val booking: Booking) : BookingState()
 }
 
+fun serializeBooking(booking: Booking): String {
+    return Json.encodeToString(booking)
+}
+
+fun deserializeBooking(json: String): Booking {
+    return Json.decodeFromString(json)
+}
+
 class BookingViewModel(
-    private val firestoreService: FirestoreService
+    private val firestoreService: FirestoreService,
 ) : ViewModel() {
 
     private val _bookingState = MutableLiveData<BookingState>(BookingState.Empty)
@@ -30,12 +39,14 @@ class BookingViewModel(
     private val _bookingDetailsStateFlow = MutableStateFlow<Booking?>(null)
     val bookingDetailsStateFlow: StateFlow<Booking?> get() = _bookingDetailsStateFlow
 
-    fun createBooking(booking: Booking) {
+    fun dbCreateBooking(booking: Booking) {
         _bookingState.value = BookingState.Loading
         viewModelScope.launch {
             try {
+                val bookingJson = serializeBooking(booking)
+                Log.d("BookingViewModel", "Serialized Booking: $bookingJson")
+
                 val bookingId = firestoreService.createBooking(booking)
-                // Log the booking ID for debugging purposes
                 Log.d("BookingViewModel", "Booking created with ID: $bookingId")
                 _bookingState.value = BookingState.Success("Booking created with ID: $bookingId")
             } catch (e: Exception) {
@@ -45,7 +56,7 @@ class BookingViewModel(
         }
     }
 
-    fun readBooking(bookingId: String) {
+    fun dbReadBooking(bookingId: String) {
         _bookingState.value = BookingState.Loading
         viewModelScope.launch {
             try {
@@ -63,10 +74,14 @@ class BookingViewModel(
         }
     }
 
-    fun updateBooking(booking: Booking) {
+    fun dbUpdateBooking(booking: Booking) {
         _bookingState.value = BookingState.Loading
         viewModelScope.launch {
             try {
+                // Serialize đối tượng Booking thành JSON trước khi gửi lên Firestore
+                val bookingJson = serializeBooking(booking)
+                Log.d("BookingViewModel", "Serialized Booking for Update: $bookingJson")
+
                 firestoreService.updateBooking(booking)
                 _bookingState.value = BookingState.Success("Booking updated successfully")
             } catch (e: Exception) {
@@ -76,7 +91,7 @@ class BookingViewModel(
         }
     }
 
-    fun deleteBooking(bookingId: String) {
+    fun dbDeleteBooking(bookingId: String) {
         _bookingState.value = BookingState.Loading
         viewModelScope.launch {
             try {

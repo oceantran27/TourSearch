@@ -4,7 +4,9 @@ import com.example.flybooking.model.response.amadeus.Activity
 import com.example.flybooking.model.response.amadeus.FlightOffer
 import com.example.flybooking.ui.viewmodel.HotelObject
 import com.example.flybooking.ui.viewmodel.TransferObject
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Booking(
     val id: String,
     var activities: List<Activity>,
