@@ -40,9 +40,10 @@ class PassengerInfoTest {
         assert(addButton != null) { "Add button not found" }
 
         addButton.click()
-        addButton.click()
-
         sleep(1000)
+        addButton.click()
+        sleep(1000)
+
         val adultCount = device.findObject(By.text("3 Adult"))
         assert(adultCount != null) { "Adult count not found" }
     }
@@ -58,10 +59,12 @@ class PassengerInfoTest {
         assert(addButton != null) { "Add button not found" }
 
         addButton.click()
-        addButton.click()
-        addButton.click()
-
         sleep(1000)
+        addButton.click()
+        sleep(1000)
+        addButton.click()
+        sleep(1000)
+
         val childrenCount = device.findObject(By.text("4 Child"))
         assert(childrenCount != null) { "Children count not found" }
     }
@@ -78,7 +81,6 @@ class PassengerInfoTest {
         assert(removeButton != null) { "Remove button not found" }
 
         removeButton.click()
-
         sleep(1000)
         val childrenCount = device.findObject(By.text("0 Child"))
         assert(childrenCount != null) { "Children count not found" }
