@@ -38,12 +38,12 @@ jobs:
 
     - name: Install dependencies
       run: ./gradlew dependencies
-      
-    - name: Assemble
-      run: ./gradlew assembleDebug assembleAndroidTest
 
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Assemble
+      run: ./gradlew assembleDebug assembleAndroidTest
 
     - name: Run tests
       uses: emulator-wtf/run-tests@v0
