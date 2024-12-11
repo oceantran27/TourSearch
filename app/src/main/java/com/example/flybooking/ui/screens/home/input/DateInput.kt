@@ -18,7 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.flybooking.R
@@ -31,6 +32,7 @@ import java.util.Locale
 fun DateInput(
     date: String,
     onDateChange: () -> Unit,
+    textDesc: String = "",
     modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -52,16 +54,12 @@ fun DateInput(
             Text(
                 text = date,
                 fontSize = 14.sp,
-                modifier = Modifier.clickable(onClick = onDateChange)
+                modifier = Modifier.clickable(onClick = onDateChange).semantics {
+                    contentDescription = textDesc
+                }
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun DateInputPreview() {
-    DateInput(date = "12 Jan, 2022", onDateChange = {})
 }
 
 @Composable
@@ -90,7 +88,7 @@ fun DateInputs(
         },
         calendar.get(Calendar.YEAR),
         calendar.get(Calendar.MONTH),
-        calendar.get(Calendar.DAY_OF_MONTH)
+        calendar.get(Calendar.DAY_OF_MONTH),
     )
 
     // Date Picker cho ngày về
@@ -112,7 +110,10 @@ fun DateInputs(
             DateInput(
                 date = departureDateString,
                 onDateChange = { departureDatePickerDialog.show() },
-                modifier = Modifier.fillMaxWidth()
+                textDesc = "Departure text",
+                modifier = Modifier.fillMaxWidth().semantics {
+                    contentDescription = "Departure field"
+                }
             )
         }
         Spacer(modifier = Modifier.width(8.dp))
@@ -120,7 +121,10 @@ fun DateInputs(
             DateInput(
                 date = returnDateString,
                 onDateChange = { returnDatePickerDialog.show() },
-                modifier = Modifier.fillMaxWidth()
+                textDesc = "Return text",
+                modifier = Modifier.fillMaxWidth().semantics {
+                    contentDescription = "Return field"
+                }
             )
         }
     }
