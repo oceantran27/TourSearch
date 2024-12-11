@@ -45,7 +45,7 @@ jobs:
       run: ./gradlew test
 
     - name: Run Instrumented Tests with Emulator
-      uses: reactivecircus/android-emulator-runner@v3
+      uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 34
         target: google_apis
