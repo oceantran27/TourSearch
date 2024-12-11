@@ -16,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.flybooking.R
@@ -81,14 +83,18 @@ fun PassengerNumberInput(
                     label = noOfAdults,
                     addPassenger = onAddAdult,
                     removePassenger = onRemoveAdult,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f).semantics {
+                        contentDescription = "Adults"
+                    }
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 PassengerInfo(
                     label = noOfChildren,
                     addPassenger = onAddChild,
                     removePassenger = onRemoveChild,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f).semantics {
+                        contentDescription = "Children"
+                    }
                 )
             }
         }
