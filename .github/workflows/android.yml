@@ -52,3 +52,4 @@ jobs:
         app: app/build/outputs/apk/debug/app-debug.apk
         test: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
         outputs-dir: build/test-results
+        devices: model=Pixel2,version=34
