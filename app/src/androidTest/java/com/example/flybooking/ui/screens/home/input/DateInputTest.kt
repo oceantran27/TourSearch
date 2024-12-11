@@ -1,4 +1,4 @@
-package com.example.flybooking.navigation
+package com.example.flybooking.ui.screens.home.input
 
 import android.content.Context
 import android.content.Intent
@@ -38,7 +38,7 @@ class DateInputTest {
         assert(dateInput != null) { "Departure field not found" }
         dateInput.click()
 
-        sleep(1000)
+        sleep(TIMEOUT)
 
         val day = device.findObject(By.text("29"))
         assert(day != null) { "Date '29' not found in DatePicker" }

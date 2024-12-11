@@ -36,6 +36,7 @@ fun SearchableDropdownMenuField(
     onInvalidOption: () -> Unit,
     painter: Painter,
     prePickedOption: City = City("", "", ""),
+    contentDesc: String = "",
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -75,6 +76,9 @@ fun SearchableDropdownMenuField(
             modifier = Modifier
                 .menuAnchor(type = MenuAnchorType.PrimaryEditable, enabled = true)
                 .fillMaxWidth()
+                .semantics {
+                    contentDescription = contentDesc
+                }
             ,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Transparent,
