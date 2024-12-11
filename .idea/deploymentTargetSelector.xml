@@ -19,7 +19,7 @@
       <SelectionState runConfigName="AppNavigationTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testHomeScreenDisplayedByDefault()">
+      <SelectionState runConfigName="DateInputTest (1)">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
