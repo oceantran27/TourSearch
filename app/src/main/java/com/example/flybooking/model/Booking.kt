@@ -7,10 +7,10 @@ import com.example.flybooking.ui.viewmodel.TransferObject
 
 data class Booking(
     val id: String,
-    val activities: List<Activity>,
-    val hotel: HotelObject,
-    val flight: FlightOffer,
-    val transfers: List<TransferObject>
+    var activities: List<Activity>,
+    var hotels: List<HotelObject>,
+    var flights: List<FlightOffer>,
+    var transfers: List<TransferObject>
 ) {
-    constructor(): this("0", emptyList(), HotelObject(), FlightOffer(), emptyList())
+    constructor() : this("0", emptyList(), emptyList(), emptyList(), emptyList())
 }
