@@ -81,7 +81,7 @@ fun ResultScreen(
 
     Box(modifier = modifier.padding(16.dp)) {
         LazyColumn(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 80.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -141,7 +141,6 @@ fun ResultScreen(
                 )
             }
         }
-
 
         FloatingActionButton(
             onClick = {
