@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,10 +39,12 @@ import com.example.flybooking.ui.screens.home.flights.FlightOfferCard
 import com.example.flybooking.ui.screens.home.hotels.HotelCard
 import com.example.flybooking.ui.screens.home.search.LoadingScene
 import com.example.flybooking.ui.screens.home.transfer.TransferDisplay
+import com.example.flybooking.ui.viewmodel.AuthViewModel
 import com.example.flybooking.ui.viewmodel.BookingState
 import com.example.flybooking.ui.viewmodel.BookingViewModel
 import com.example.flybooking.ui.viewmodel.HotelObject
 import com.example.flybooking.ui.viewmodel.TransferObject
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
 @Composable
@@ -51,8 +54,11 @@ fun ResultScreen(
     hotel: HotelObject? = null,
     flight: FlightOffer? = null,
     transfers: List<TransferObject>? = null,
-    bookingViewModel: BookingViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    authViewModel: AuthViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+
     if (activities == null || hotel == null || flight == null || transfers == null) {
         Text(
             text = "Error",
@@ -62,8 +68,7 @@ fun ResultScreen(
         return
     }
 
-    val bookingState by bookingViewModel.bookingState.observeAsState()
-    val context = LocalContext.current
+    val bookingState by authViewModel.addBookingState.observeAsState()
 
     if (bookingState is BookingState.Loading) {
         LoadingScene()
@@ -150,17 +155,21 @@ fun ResultScreen(
 
         FloatingActionButton(
             onClick = {
-                bookingViewModel.createBooking(
-                    Booking(
-                        id = randomizeBookingId(),
-                        activities = activities,
-                        hotels = listOf(hotel),
-                        flights = listOf(flight),
-                        transfers = transfers
+                coroutineScope.launch {
+                    authViewModel.addHistoryBooking(
+                        Booking(
+                            id = randomizeBookingId(),
+                            activities = activities,
+                            hotels = listOf(hotel),
+                            flights = listOf(flight),
+                            transfers = transfers
+                        )
                     )
-                )
+                }
             },
-            modifier = Modifier.align(Alignment.BottomEnd).background(Color.Transparent)
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .background(Color.Transparent)
         ) {
             Icon(Icons.Filled.Save, contentDescription = "Save Booking")
         }
