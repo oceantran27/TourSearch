@@ -25,6 +25,34 @@ data class FlightOffer(
                 total = "0.0",
                 base = "0.0")
         )
+        fun mock() = FlightOffer(
+            id = "1",
+            itineraries = listOf(
+                Itinerary(
+                    duration = "PT15H30M",
+                    segments = listOf(
+                        Segment(
+                            departure = AirportInfo(
+                                iataCode = "HAN",
+                                at = "2024-12-15T09:00:00"
+                            ),
+                            arrival = AirportInfo(
+                                iataCode = "CDG",
+                                at = "2024-12-15T20:30:00"
+                            ),
+                            carrierCode = "VN",
+                            duration = "PT11H30M"
+                        )
+                    )
+                )
+            ),
+            price = Price(
+                currency = "USD",
+                total = "1200.00",
+                base = "1000.00"
+            ),
+            validatingAirlineCodes = listOf("VN")
+        )
     }
 }
 

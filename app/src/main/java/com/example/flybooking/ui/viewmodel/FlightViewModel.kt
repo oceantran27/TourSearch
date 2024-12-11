@@ -37,7 +37,7 @@ class FlightViewModel(
         viewModelScope.launch {
             flightUiState = FlightUiState.Loading
             flightUiState = try {
-                val offers = repository.searchFlights(
+                var offers = repository.searchFlights(
                     departure = departure,
                     destination = destination,
                     departureDate = departureDate,
@@ -45,6 +45,9 @@ class FlightViewModel(
                     adults = adults,
                     children = children
                 )!!.data
+                if (offers.isEmpty()) {
+                    offers = listOf(FlightOffer.mock())
+                }
                 FlightUiState.Success(offers = offers, selected = offers.firstOrNull())
             } catch (e: Exception) {
                 FlightUiState.Error

@@ -1,4 +1,4 @@
-package com.example.flybooking.util2
+package com.example.flybooking.utils
 
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
