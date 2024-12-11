@@ -5,7 +5,9 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -139,6 +141,10 @@ fun ResultScreen(
                     transfer = transferObject.result,
                     info = transferObject.info
                 )
+            }
+
+            item {
+                Spacer(modifier.height(16.dp))
             }
         }
 
