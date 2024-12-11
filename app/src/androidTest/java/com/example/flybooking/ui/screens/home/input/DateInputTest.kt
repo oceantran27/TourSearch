@@ -34,11 +34,13 @@ class DateInputTest {
         val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), TIMEOUT)
         assert(homeScreen) { "Home screen should be displayed by default" }
 
+        sleep(1000)
+
         val dateInput = device.findObject(By.desc("Departure field"))
         assert(dateInput != null) { "Departure field not found" }
         dateInput.click()
 
-        sleep(TIMEOUT)
+        sleep(1000)
 
         val day = device.findObject(By.text("29"))
         assert(day != null) { "Date '29' not found in DatePicker" }
@@ -62,6 +64,8 @@ class DateInputTest {
     fun testReturnDateSelectionUpdatesHomeViewModel() {
         val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), TIMEOUT)
         assert(homeScreen) { "Home screen should be displayed by default" }
+
+        sleep(1000)
 
         val dateInput = device.findObject(By.desc("Return field"))
         assert(dateInput != null) { "Return field not found" }
