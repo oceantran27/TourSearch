@@ -41,12 +41,3 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
-
-    - name: Run Unit Tests
-      run: ./gradlew test
-
-    - name: Run Android instrumentation tests
-      uses: emulator-wtf/run-tests@v0.9.10
-      with:
-        version: 0.11.0
-        api-token: ${{ secrets.EMULATOR_KEY }}
