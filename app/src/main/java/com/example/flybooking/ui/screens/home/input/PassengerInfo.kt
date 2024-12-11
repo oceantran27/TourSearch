@@ -27,6 +27,7 @@ fun PassengerInfo(
     label: String,
     addPassenger: () -> Unit,
     removePassenger: () -> Unit,
+    txtDesc: String,
     modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -50,7 +51,9 @@ fun PassengerInfo(
                 modifier = Modifier.clickable(onClick = removePassenger)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(label, fontSize = 14.sp)
+            Text(label, fontSize = 14.sp, modifier = Modifier.semantics {
+                contentDescription = txtDesc
+            })
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "+",
@@ -83,6 +86,7 @@ fun PassengerNumberInput(
                     label = noOfAdults,
                     addPassenger = onAddAdult,
                     removePassenger = onRemoveAdult,
+                    txtDesc = "Adults text",
                     modifier = Modifier.weight(1f).semantics {
                         contentDescription = "Adults"
                     }
@@ -92,6 +96,7 @@ fun PassengerNumberInput(
                     label = noOfChildren,
                     addPassenger = onAddChild,
                     removePassenger = onRemoveChild,
+                    txtDesc = "Children text",
                     modifier = Modifier.weight(1f).semantics {
                         contentDescription = "Children"
                     }
