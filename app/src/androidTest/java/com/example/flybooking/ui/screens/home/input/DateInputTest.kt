@@ -37,7 +37,7 @@ class DateInputTest {
         sleep(1000)
 
         val dateInput = device.findObject(By.desc("Departure text"))
-        assert(dateInput != null) { "Departure field not found" }
+        assert(dateInput != null) { "Departure text field not found" }
         dateInput.click()
 
         sleep(1000)
@@ -68,7 +68,7 @@ class DateInputTest {
         sleep(1000)
 
         val dateInput = device.findObject(By.desc("Return text"))
-        assert(dateInput != null) { "Return field not found" }
+        assert(dateInput != null) { "Return text field not found" }
         dateInput.click()
 
         sleep(1000)
