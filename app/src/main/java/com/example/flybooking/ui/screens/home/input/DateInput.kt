@@ -111,9 +111,7 @@ fun DateInputs(
                 date = departureDateString,
                 onDateChange = { departureDatePickerDialog.show() },
                 textDesc = "Departure text",
-                modifier = Modifier.fillMaxWidth().semantics {
-                    contentDescription = "Departure field"
-                }
+                modifier = Modifier.fillMaxWidth()
             )
         }
         Spacer(modifier = Modifier.width(8.dp))
@@ -122,9 +120,7 @@ fun DateInputs(
                 date = returnDateString,
                 onDateChange = { returnDatePickerDialog.show() },
                 textDesc = "Return text",
-                modifier = Modifier.fillMaxWidth().semantics {
-                    contentDescription = "Return field"
-                }
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }
