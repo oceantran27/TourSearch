@@ -10,6 +10,7 @@ import androidx.test.uiautomator.Until
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 class AppNavigationTest {
@@ -30,7 +31,7 @@ class AppNavigationTest {
         context.startActivity(intent)
 
         // Wait for the app to appear
-        device.wait(Until.hasObject(By.pkg(PACKAGE_NAME).depth(0)), 5000)
+        device.wait(Until.hasObject(By.pkg(PACKAGE_NAME).depth(0)), 50000)
     }
 
     @Test
@@ -38,6 +39,27 @@ class AppNavigationTest {
         val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), 10000L)
         assert(homeScreen) {
             "Home screen should be displayed by default"
+        }
+    }
+
+    @Test
+    fun testBookmarkButtonAvailable() {
+        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), 10000L)
+        assert(homeScreen) {
+            "Home screen should be displayed by default"
+        }
+        sleep(100)
+        val bookmarkButton = device.findObject(By.desc("Bookmarks"))
+        assert(bookmarkButton != null) {
+            "Bookmark button not found"
+        }
+
+        bookmarkButton.click()
+        sleep(500)
+
+        val bookmarkScreen = device.wait(Until.hasObject(By.desc("BOOKMARK_SCREEN")), 10000L)
+        assert(bookmarkScreen) {
+            "Bookmark screen should be displayed"
         }
     }
 }

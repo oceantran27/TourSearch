@@ -24,7 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.flybooking.navigation.bottombar.droplet.AnimatedBottomBar
+import com.example.flybooking.navigation.bottombar.normal.CustomNavigationBar
 import com.example.flybooking.ui.screen.BookmarkScreen
 import com.example.flybooking.ui.screens.home.input.HomeScreen
 
@@ -49,19 +49,21 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
     Scaffold(
         bottomBar = {
-//            CustomNavigationBar(
-//                onTabSelected = { screen -> navigateTo(screen, screen.name) },
-//                selectedTab = selectedTab,
-//                modifier = Modifier.navigationBarsPadding()
-//            )
-            AnimatedBottomBar(
-                selectedTab = selectedTab.ordinal,
-                onTabSelected = {
-                    selectedTab = AppScreens.entries.toTypedArray()[it]
-                    navigateTo(selectedTab, selectedTab.name)
+            CustomNavigationBar(
+                onTabSelected = { screen ->
+                    navigateTo(screen, screen.name)
                 },
+                selectedTab = selectedTab,
                 modifier = Modifier.navigationBarsPadding()
             )
+//            AnimatedBottomBar(
+//                selectedTab = selectedTab.ordinal,
+//                onTabSelected = {
+//                    selectedTab = AppScreens.entries.toTypedArray()[it]
+//                    navigateTo(selectedTab, selectedTab.name)
+//                },
+//                modifier = Modifier.navigationBarsPadding()
+//            )
         }
     ) { innerPadding ->
         NavHost(
@@ -92,9 +94,9 @@ fun AppNavigation(modifier: Modifier = Modifier) {
                     }
                 )
             }
-            composable(AppScreens.Explore.name) {
-                ScreenPlaceholder(screenName = AppScreens.Explore.name)
-            }
+//            composable(AppScreens.Explore.name) {
+//                ScreenPlaceholder(screenName = AppScreens.Explore.name)
+//            }
             composable(AppScreens.Bookmarks.name) {
                 BookmarkScreen()
             }

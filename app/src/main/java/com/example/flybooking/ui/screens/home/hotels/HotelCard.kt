@@ -54,7 +54,8 @@ import com.example.flybooking.ui.viewmodel.HotelObject
 @Composable
 fun HotelCard(
     modifier: Modifier = Modifier,
-    hotel: HotelObject
+    hotel: HotelObject,
+    enableAmenities: Boolean = true
 ) {
     val pagerState = rememberPagerState(pageCount = { hotel.photos.size })
     val context = LocalContext.current
@@ -75,7 +76,7 @@ fun HotelCard(
             val photo = hotel.photos[page]
             val url = photo.images.large.url
             Box(
-                modifier = Modifier.fillMaxWidth().height(225.dp) // Đảm bảo bao bọc cả hình ảnh
+                modifier = Modifier.fillMaxWidth().height(225.dp)
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(context)
@@ -148,41 +149,43 @@ fun HotelCard(
             color = ButtonBackground
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Column(
-            modifier = Modifier.fillMaxWidth().animateContentSize(),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth().clickable(onClick = { expanded = !expanded }).padding(vertical = 8.dp),
+        if (enableAmenities) {
+            Column(
+                modifier = Modifier.fillMaxWidth().animateContentSize(),
+                verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = "Amenities",
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight.Black
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Icon(
-                    imageVector = if (expanded) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            if (expanded) {
-                hotel.details.amenities?.forEach{ amenity ->
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = null,
-                            tint = Color.Green,
-                            modifier = Modifier.size(20.dp)
-                        )
-                        Spacer(modifier = Modifier.width(2.dp))
-                        Text(
-                            text = amenity,
-                            fontSize = 15.sp
-                        )
+                Row(
+                    modifier = Modifier.fillMaxWidth().clickable(onClick = { expanded = !expanded }).padding(vertical = 8.dp),
+                ) {
+                    Text(
+                        text = "Amenities",
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.Black
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Icon(
+                        imageVector = if (expanded) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                if (expanded) {
+                    hotel.details.amenities?.forEach{ amenity ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                                tint = Color.Green,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(2.dp))
+                            Text(
+                                text = amenity,
+                                fontSize = 15.sp
+                            )
+                        }
                     }
                 }
             }

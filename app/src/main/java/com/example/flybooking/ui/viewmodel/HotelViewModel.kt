@@ -55,7 +55,7 @@ class HotelViewModel(
         viewModelScope.launch {
             try {
                 val cityData = repository.getCityData(destination)!!
-                val nearbyIds = repository.getNearbyIds(cityData)!!.subList(4, 5)
+                val nearbyIds = repository.getNearbyIds(cityData)!!.subList(4, 9)
                 val hotelList: List<HotelObject> = nearbyIds.map { id ->
                     coroutineScope {
                         val detailsDeferred = async { repository.getTripAdvisorDetails(id) }
@@ -81,5 +81,9 @@ class HotelViewModel(
                 hotelUiState = HotelUiState.Error
             }
         }
+    }
+
+    fun selectHotel(hotel: HotelObject) {
+        hotelUiState = (hotelUiState as HotelUiState.Success).copy(selected = hotel)
     }
 }
