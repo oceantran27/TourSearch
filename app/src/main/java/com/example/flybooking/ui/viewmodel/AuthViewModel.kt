@@ -29,7 +29,7 @@ class AuthViewModel(
     private val _userStateFlow = MutableStateFlow<User?>(null)
     val userStateFlow: StateFlow<User?> get() = _userStateFlow
 
-    private val _addBookingState = MutableLiveData<BookingState>()
+    private val _addBookingState = MutableLiveData<BookingState>(BookingState.Empty)
     val addBookingState: LiveData<BookingState> = _addBookingState
 
     init {

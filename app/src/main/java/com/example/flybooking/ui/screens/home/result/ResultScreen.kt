@@ -41,7 +41,6 @@ import com.example.flybooking.ui.screens.home.search.LoadingScene
 import com.example.flybooking.ui.screens.home.transfer.TransferDisplay
 import com.example.flybooking.ui.viewmodel.AuthViewModel
 import com.example.flybooking.ui.viewmodel.BookingState
-import com.example.flybooking.ui.viewmodel.BookingViewModel
 import com.example.flybooking.ui.viewmodel.HotelObject
 import com.example.flybooking.ui.viewmodel.TransferObject
 import kotlinx.coroutines.launch
@@ -54,7 +53,8 @@ fun ResultScreen(
     hotel: HotelObject? = null,
     flight: FlightOffer? = null,
     transfers: List<TransferObject>? = null,
-    authViewModel: AuthViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    authViewModel: AuthViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    showSaveButton: Boolean = true
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -153,25 +153,27 @@ fun ResultScreen(
             }
         }
 
-        FloatingActionButton(
-            onClick = {
-                coroutineScope.launch {
-                    authViewModel.addHistoryBooking(
-                        Booking(
-                            id = randomizeBookingId(),
-                            activities = activities,
-                            hotels = listOf(hotel),
-                            flights = listOf(flight),
-                            transfers = transfers
+        if (showSaveButton) {
+            FloatingActionButton(
+                onClick = {
+                    coroutineScope.launch {
+                        authViewModel.addHistoryBooking(
+                            Booking(
+                                id = randomizeBookingId(),
+                                activities = activities,
+                                hotels = listOf(hotel),
+                                flights = listOf(flight),
+                                transfers = transfers
+                            )
                         )
-                    )
-                }
-            },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .background(Color.Transparent)
-        ) {
-            Icon(Icons.Filled.Save, contentDescription = "Save Booking")
+                    }
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .background(Color.Transparent)
+            ) {
+                Icon(Icons.Filled.Save, contentDescription = "Save Booking")
+            }
         }
     }
 }
