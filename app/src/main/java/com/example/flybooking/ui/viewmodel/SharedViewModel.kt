@@ -1,5 +1,6 @@
 package com.example.flybooking.ui.viewmodel
 
+import com.example.flybooking.model.Booking
 import com.example.flybooking.model.City
 
 object SharedViewModel {
@@ -14,6 +15,7 @@ object SharedViewModel {
     var hotelViewModel: HotelViewModel? = null
     var transferViewModel: TransferViewModel? = null
     var flightViewModel: FlightViewModel? = null
+    var booking: Booking? = null
     fun set(
         departure: City,
         destination: City,

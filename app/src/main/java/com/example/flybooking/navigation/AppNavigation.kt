@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.flybooking.navigation.bottombar.droplet.AnimatedBottomBar
+import com.example.flybooking.ui.screen.BookmarkScreen
 import com.example.flybooking.ui.screens.home.input.HomeScreen
 
 @Composable
@@ -95,7 +96,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
                 ScreenPlaceholder(screenName = AppScreens.Explore.name)
             }
             composable(AppScreens.Bookmarks.name) {
-                ScreenPlaceholder(screenName = AppScreens.Bookmarks.name)
+                BookmarkScreen()
             }
             composable(AppScreens.Setting.name) {
                 ScreenPlaceholder(screenName = AppScreens.Setting.name)

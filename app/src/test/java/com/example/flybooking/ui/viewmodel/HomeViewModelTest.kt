@@ -3,14 +3,12 @@ package com.example.flybooking.ui.viewmodel
 import com.example.flybooking.model.City
 import com.example.flybooking.repository.Repository
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
 
     private lateinit var repository: Repository

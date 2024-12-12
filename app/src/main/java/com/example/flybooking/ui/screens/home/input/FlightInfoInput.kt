@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import com.example.flybooking.R
 import com.example.flybooking.model.City
 
@@ -33,10 +31,9 @@ fun DepartureAndDestinationInput(
             onOptionSelected = { onDepartureSelected(it) },
             painter = painterResource(id = R.drawable.from_ic),
             onInvalidOption = onDepartureInvalidOption,
+            contentDesc = "Departure",
             //prePickedOption = prePickedDeparture,
-            modifier = Modifier.fillMaxWidth().semantics {
-                contentDescription = "FROM_LABEL"
-            }
+            modifier = Modifier.fillMaxWidth()
         )
     }
 
@@ -48,6 +45,7 @@ fun DepartureAndDestinationInput(
             onOptionSelected = { onDestinationSelected(it) },
             painter = painterResource(id = R.drawable.to_ic),
             onInvalidOption = onDestinationInvalidOption,
+            contentDesc = "Destination",
             //prePickedOption = prePickedDestination,
             modifier = Modifier.fillMaxWidth()
         )

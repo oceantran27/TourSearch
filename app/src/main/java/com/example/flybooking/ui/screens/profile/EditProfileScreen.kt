@@ -56,7 +56,7 @@ import coil.compose.AsyncImage
 import com.example.flybooking.activity.AppViewModelProvider
 import com.example.flybooking.R
 import com.example.flybooking.help.convertTimestampToDate
-import com.example.flybooking.util2.DatePickerModal
+import com.example.flybooking.utils.DatePickerModal
 import com.example.flybooking.ui.viewmodel.AuthViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)

@@ -16,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.flybooking.R
@@ -25,6 +27,7 @@ fun PassengerInfo(
     label: String,
     addPassenger: () -> Unit,
     removePassenger: () -> Unit,
+    txtDesc: String,
     modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -48,7 +51,9 @@ fun PassengerInfo(
                 modifier = Modifier.clickable(onClick = removePassenger)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(label, fontSize = 14.sp)
+            Text(label, fontSize = 14.sp, modifier = Modifier.semantics {
+                contentDescription = txtDesc
+            })
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "+",
@@ -81,14 +86,20 @@ fun PassengerNumberInput(
                     label = noOfAdults,
                     addPassenger = onAddAdult,
                     removePassenger = onRemoveAdult,
-                    modifier = Modifier.weight(1f)
+                    txtDesc = "Adults text",
+                    modifier = Modifier.weight(1f).semantics {
+                        contentDescription = "Adults"
+                    }
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 PassengerInfo(
                     label = noOfChildren,
                     addPassenger = onAddChild,
                     removePassenger = onRemoveChild,
-                    modifier = Modifier.weight(1f)
+                    txtDesc = "Children text",
+                    modifier = Modifier.weight(1f).semantics {
+                        contentDescription = "Children"
+                    }
                 )
             }
         }
