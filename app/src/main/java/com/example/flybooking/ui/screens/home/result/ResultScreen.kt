@@ -139,7 +139,11 @@ fun ResultScreen(
 
             // ----------------- Transfers ----------------- //
             item {
-                Text("Transfers")
+                Text(
+                    text = "Transfers",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
             items(transfers) { transferObject ->
                 TransferDisplay(
@@ -149,7 +153,7 @@ fun ResultScreen(
             }
 
             item {
-                Spacer(modifier.height(16.dp))
+                Spacer(modifier.height(64.dp))
             }
         }
 

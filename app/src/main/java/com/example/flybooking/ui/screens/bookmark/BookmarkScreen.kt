@@ -24,6 +24,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -45,7 +47,9 @@ fun BookmarkScreen(
     if (userState == null) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().semantics {
+                contentDescription = "BOOKMARK_SCREEN"
+            }
         ) {
             Text("Please log in to view your booking history.")
         }
@@ -59,11 +63,17 @@ fun BookmarkScreen(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                modifier = Modifier.semantics {
+                    contentDescription = "BOOKMARK_SCREEN"
+                }
+            )
         }
     }
 
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(modifier = Modifier.fillMaxSize().semantics {
+        contentDescription = "BOOKMARK_SCREEN"
+    }) {
         items(bookingHistory) { bookingId ->
             BookingCard(bookingId = bookingId, bookingViewModel = bookingViewModel)
         }

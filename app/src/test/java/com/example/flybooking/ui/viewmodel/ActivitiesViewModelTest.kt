@@ -24,7 +24,6 @@ class ActivitiesViewModelTest {
 
     @Test
     fun testSelectActivityUpdatesStateAndCost() = runTest {
-        // Mock initial state
         val geoCode = GeoCode(latitude = 48.8566, longitude = 2.3522)
         val activity = Activity(
             name = "Eiffel Tower Tour",
@@ -42,16 +41,14 @@ class ActivitiesViewModelTest {
             )
         )
 
-        // Invoke the method
         viewModel.selectActivity(card)
 
-        // Assert UI state
         val uiState = viewModel.activitiesUiState
         assertTrue(uiState is ActivitiesUiState.Success)
         val successState = uiState as ActivitiesUiState.Success
         assertTrue(successState.cards[0].selected)
         assertTrue(successState.selected.contains(activity))
-        assertTrue(successState.totalCost > 0) // Ensure cost is updated
+        assertTrue(successState.totalCost > 0)
     }
 
 }

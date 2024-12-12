@@ -29,6 +29,7 @@ import com.example.flybooking.activity.ActivitiesEditActivity
 import com.example.flybooking.activity.ActivityDetailActivity
 import com.example.flybooking.activity.AppViewModelProvider
 import com.example.flybooking.activity.FlightsEditActivity
+import com.example.flybooking.activity.HotelsEditActivity
 import com.example.flybooking.activity.TransferSearchActivity
 import com.example.flybooking.model.response.amadeus.Activity
 import com.example.flybooking.model.response.amadeus.ActivityCard
@@ -142,7 +143,11 @@ fun FlightHotelActivityScreen(
             item {
                 SectionHeader(
                     title = "Hotel",
-                    onEdit = {},
+                    onEdit = {
+                        SharedViewModel.hotelViewModel = hotelViewModel
+                        val intent = Intent(context, HotelsEditActivity::class.java)
+                        context.startActivity(intent)
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
             }

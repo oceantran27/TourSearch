@@ -17,8 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -80,7 +78,7 @@ fun CustomNavigationBarItem(
         Icon(
             imageVector = when (screen) {
                 AppScreens.Home -> Icons.Filled.Home
-                AppScreens.Explore -> Icons.Filled.Search
+//                AppScreens.Explore -> Icons.Filled.Search
                 AppScreens.Bookmarks -> Icons.Filled.Favorite
                 AppScreens.Setting -> Icons.Filled.Settings
                 else -> Icons.Filled.Home // Dummy

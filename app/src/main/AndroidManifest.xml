@@ -36,6 +36,7 @@
         <activity android:name=".activity.ProfileActivity" />
         <activity android:name=".activity.ShowResultActivity" />
         <activity android:name=".activity.BookingDetailActivity" />
+        <activity android:name=".activity.HotelsEditActivity" />
     </application>
 
 </manifest>

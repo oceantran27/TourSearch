@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.flybooking.R
 import com.example.flybooking.ui.theme.LightPurple
@@ -57,6 +59,9 @@ fun AnimatedBottomBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(64.dp)
+                    .semantics {
+                        contentDescription = "bookmark btn"
+                    }
             )
         }
     }
@@ -77,12 +82,12 @@ val navButtons = listOf(
         isSelected = false,
         description = "Home"
     ),
-    NavButton(
-        icon = R.drawable.compass,
-        outlinedIcon = R.drawable.compass_outline,
-        isSelected = false,
-        description = "Explore"
-    ),
+//    NavButton(
+//        icon = R.drawable.compass,
+//        outlinedIcon = R.drawable.compass_outline,
+//        isSelected = false,
+//        description = "Explore"
+//    ),
     NavButton(
         icon = R.drawable.bookmark,
         outlinedIcon = R.drawable.bookmark_outline,

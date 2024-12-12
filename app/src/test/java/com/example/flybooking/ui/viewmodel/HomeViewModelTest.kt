@@ -16,22 +16,17 @@ class HomeViewModelTest {
 
     @Before
     fun setupViewModel() {
-        // Mock repository
         repository = mockk()
 
-        // Initialize ViewModel
         viewModel = HomeViewModel(repository)
     }
 
     @Test
     fun testIncreaseAdultCountUpdatesPassengerCountCorrectly() = runTest {
-        // Default state
         val initialState = viewModel.homeUiState.first()
 
-        // Action
         viewModel.increaseAdultCount()
 
-        // Assert
         val updatedState = viewModel.homeUiState.first()
         assertEquals(initialState.passengerAdultCount + 1, updatedState.passengerAdultCount)
     }
@@ -52,15 +47,12 @@ class HomeViewModelTest {
 
     @Test
     fun testCheckValidFormReturnsFalseWhenDataIsInvalid() {
-        // Sample invalid cities and money amount
         val departure = City("", "", "US") // Empty name
         val destination = City("London", "LON", "UK")
         val moneyAmount = 1000.0
 
-        // Action
         val isValid = viewModel.checkValidForm(departure, destination, moneyAmount)
 
-        // Assert
         assertEquals(false, isValid)
     }
 }
