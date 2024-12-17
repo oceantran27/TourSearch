@@ -108,14 +108,16 @@ class LoginTest {
         assert(passwordInput != null) {
             "Password input field should be displayed"
         }
-        passwordInput.click()
-        sleep(500)
-        device.executeShellCommand("input text 123456789")
-
         val loginButton = device.findObject(By.desc("Login_Button"))
         assert(loginButton != null) {
             "Login button should be displayed"
         }
+        passwordInput.click()
+        sleep(500)
+        device.executeShellCommand("input text 123456789")
+        device.executeShellCommand("input keyevent KEYCODE_BACK")
+        sleep(500)
+
         loginButton.click()
 
         sleep(3000)
@@ -170,19 +172,20 @@ class LoginTest {
         assert(passwordInput != null) {
             "Password input field should be displayed"
         }
-        passwordInput.click()
-        sleep(500)
-        device.executeShellCommand("input text 123")
-
         val loginButton = device.findObject(By.desc("Login_Button"))
         assert(loginButton != null) {
             "Login button should be displayed"
         }
+        passwordInput.click()
+        sleep(500)
+        device.executeShellCommand("input text 123")
+        device.executeShellCommand("input keyevent KEYCODE_BACK")
+        sleep(500)
         loginButton.click()
 
         sleep(3000)
 
-        homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), 10000L)
+        homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), 1000L)
         assert(!homeScreen) {
             "Home screen should not be displayed"
         }
