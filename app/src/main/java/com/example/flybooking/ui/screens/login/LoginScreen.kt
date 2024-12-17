@@ -144,7 +144,9 @@ fun LoginScreen(
             })
         }
         Spacer(modifier = Modifier.height(16.dp))
-        TextButton(onClick = { navController.navigate("signup") }) {
+        TextButton(onClick = { navController.navigate("signup") }, modifier = Modifier.semantics {
+            contentDescription = "SignUpPageButton"
+        }) {
             Text("New Member? Register now")
         }
     }

@@ -190,4 +190,89 @@ class LoginTest {
             "Home screen should not be displayed"
         }
     }
+
+    @Test
+    fun testRegister() {
+        var homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), 10000L)
+        assert(homeScreen) {
+            "Home screen should be displayed by default"
+        }
+
+        sleep(500)
+
+        var loginPageButton = device.findObject(By.desc("Account_Button"))
+        assert(loginPageButton != null) {
+            "Login page button should be displayed"
+        }
+
+        loginPageButton.click()
+        sleep(2000)
+
+        val signOutButton = device.findObject(By.desc("SignOutButton"))
+        if (signOutButton != null) {
+            signOutButton.click()
+            sleep(500)
+            loginPageButton = device.wait(Until.findObject(By.desc("Account_Button")), 500L)
+            assert(loginPageButton != null) { "Account button should reappear after app restart." }
+            loginPageButton.click()
+            sleep(500)
+        }
+
+        val loginScreen = device.wait(Until.hasObject(By.desc("LoginScreen")), 10000L)
+        assert(loginScreen) {
+            "Login screen should be displayed"
+        }
+
+        sleep(500)
+
+        val registerButton = device.findObject(By.desc("SignUpPageButton"))
+        assert(registerButton != null) {
+            "Sign up page button should be displayed"
+        }
+        registerButton.click()
+        sleep(500)
+        val fullNameField = device.findObject(By.desc("Full name input"))
+        assert(fullNameField != null) {
+            "Full name input field should be displayed"
+        }
+        val validEmailField = device.findObject(By.desc("Email input"))
+        assert(validEmailField != null) {
+            "Email input field should be displayed"
+        }
+        val phoneNumberField = device.findObject(By.desc("Phone number input"))
+        assert(phoneNumberField != null) {
+            "Phone number input field should be displayed"
+        }
+        val passwordField = device.findObject(By.desc("Password input"))
+        assert(passwordField != null) {
+            "Password input field should be displayed"
+        }
+        val signUpButton = device.findObject(By.desc("SignUpButton"))
+        assert(signUpButton != null) {
+            "Sign up button should be displayed"
+        }
+
+        fullNameField.click()
+        sleep(500)
+        device.executeShellCommand("input text someone")
+        // Generate a random email
+        val email = "someone" + (10..999999).random() + "@gmail.com"
+        validEmailField.click()
+        sleep(500)
+        device.executeShellCommand("input text $email")
+        phoneNumberField.click()
+        sleep(500)
+        device.executeShellCommand("input text 123456789")
+        passwordField.click()
+        sleep(500)
+        device.executeShellCommand("input text 123456789")
+
+        signUpButton.click()
+        sleep(3000)
+
+        homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), 10000L)
+        assert(homeScreen) {
+            "Home screen should be displayed"
+        }
+    }
 }
