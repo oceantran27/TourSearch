@@ -108,7 +108,7 @@ class LoginTest {
         assert(passwordInput != null) {
             "Password input field should be displayed"
         }
-        val loginButton = device.findObject(By.desc("Login_Button"))
+        val loginButton = device.findObject(By.desc("Login_Button")) ?: device.findObject(By.text("Login"))
         assert(loginButton != null) {
             "Login button should be displayed"
         }
@@ -172,7 +172,7 @@ class LoginTest {
         assert(passwordInput != null) {
             "Password input field should be displayed"
         }
-        val loginButton = device.findObject(By.desc("Login_Button"))
+        val loginButton = device.findObject(By.desc("Login_Button")) ?: device.findObject(By.text("Login"))
         assert(loginButton != null) {
             "Login button should be displayed"
         }

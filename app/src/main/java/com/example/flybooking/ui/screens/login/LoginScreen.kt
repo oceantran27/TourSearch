@@ -138,11 +138,10 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp)
-                .semantics {
-                    contentDescription = "Login_Button"
-                }
         ) {
-            Text("Login")
+            Text(text = "Login", modifier = Modifier.semantics {
+                contentDescription = "Login_Button"
+            })
         }
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(onClick = { navController.navigate("signup") }) {
