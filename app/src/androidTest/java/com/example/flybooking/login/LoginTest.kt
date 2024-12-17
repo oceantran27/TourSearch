@@ -49,7 +49,7 @@ class LoginTest {
         }
 
         loginPageButton.click()
-        sleep(500)
+        sleep(2000)
 
         val signOutButton = device.findObject(By.desc("SignOutButton"))
         if (signOutButton != null) {
@@ -79,7 +79,7 @@ class LoginTest {
         var loginPageButton = device.findObject(By.desc("Account_Button"))
 
         loginPageButton.click()
-        sleep(500)
+        sleep(2000)
 
         val signOutButton = device.findObject(By.desc("SignOutButton"))
         if (signOutButton != null) {
@@ -143,7 +143,7 @@ class LoginTest {
         }
 
         loginPageButton.click()
-        sleep(500)
+        sleep(2000)
 
         val signOutButton = device.findObject(By.desc("SignOutButton"))
         if (signOutButton != null) {
