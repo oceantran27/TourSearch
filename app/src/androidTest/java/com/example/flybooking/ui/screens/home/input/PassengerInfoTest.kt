@@ -7,6 +7,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
+import com.example.flybooking.navigation.AppScreens
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +32,7 @@ class PassengerInfoTest {
 
     @Test
     fun addTwoAdults() {
-        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), TIMEOUT)
+        val homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), TIMEOUT)
         assert(homeScreen) { "Home screen should be displayed by default" }
 
         val adultField = device.findObject(By.desc("Adults"))
@@ -53,7 +54,7 @@ class PassengerInfoTest {
 
     @Test
     fun addTwoChildren() {
-        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), TIMEOUT)
+        val homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), TIMEOUT)
         assert(homeScreen) { "Home screen should be displayed by default" }
 
         val childrenField = device.findObject(By.desc("Children"))
@@ -75,7 +76,7 @@ class PassengerInfoTest {
 
     @Test
     fun removeOneChild() {
-        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), TIMEOUT)
+        val homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), TIMEOUT)
         assert(homeScreen) { "Home screen should be displayed by default" }
 
         val childrenField = device.findObject(By.desc("Children"))

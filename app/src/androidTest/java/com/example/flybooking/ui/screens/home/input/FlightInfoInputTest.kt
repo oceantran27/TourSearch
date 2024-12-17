@@ -7,6 +7,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
+import com.example.flybooking.navigation.AppScreens
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +32,7 @@ class FlightInfoInputTest {
 
     @Test
     fun testSelectDeparture() {
-        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), TIMEOUT)
+        val homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), TIMEOUT)
         assert(homeScreen) { "Home screen should be displayed by default" }
 
         sleep(1000)
@@ -54,7 +55,7 @@ class FlightInfoInputTest {
 
     @Test
     fun testSelectDestination() {
-        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), TIMEOUT)
+        val homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), TIMEOUT)
         assert(homeScreen) { "Home screen should be displayed by default" }
 
         sleep(1000)

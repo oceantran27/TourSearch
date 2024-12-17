@@ -97,11 +97,13 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 //            composable(AppScreens.Explore.name) {
 //                ScreenPlaceholder(screenName = AppScreens.Explore.name)
 //            }
-            composable(AppScreens.Bookmarks.name) {
-                BookmarkScreen()
+            composable(AppScreens.Bookmark.name) {
+                BookmarkScreen(modifier = Modifier.semantics {
+                    contentDescription = AppScreens.Bookmark.name
+                })
             }
-            composable(AppScreens.Setting.name) {
-                ScreenPlaceholder(screenName = AppScreens.Setting.name)
+            composable(AppScreens.Settings.name) {
+                ScreenPlaceholder(screenName = AppScreens.Settings.name)
             }
 //            composable(AppScreens.SearchResults.name) {
 //                ScreenPlaceholder(screenName = AppScreens.SearchResults.name)

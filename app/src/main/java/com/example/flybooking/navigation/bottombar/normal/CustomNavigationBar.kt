@@ -33,7 +33,7 @@ fun CustomNavigationBar(
                 screen = screen,
                 isSelected = screen == selectedTab,
                 onClick = { onTabSelected(screen) },
-                modifier = Modifier.semantics { contentDescription = screen.name }
+                modifier = Modifier.semantics { contentDescription = screen.name + "_TAB" }
             )
         }
     }

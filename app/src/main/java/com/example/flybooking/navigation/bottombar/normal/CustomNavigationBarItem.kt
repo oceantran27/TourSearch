@@ -38,15 +38,13 @@ fun CustomNavigationBarItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // Chỉ định rõ kiểu `Dp` cho `iconSize`
     val iconSize: Dp by animateDpAsState(
         targetValue = if (isSelected) 26.dp else 20.dp,
         animationSpec = spring(
-            dampingRatio = 0.5f, // Điều chỉnh mức "nảy"
-            stiffness = 100f     // Độ "cứng" của lò xo, càng nhỏ càng nảy nhiều
+            dampingRatio = 0.5f,
+            stiffness = 100f
         )
     )
-    // Chỉ định rõ kiểu `Color` cho `backgroundColor`
     val backgroundColor by animateColorAsState(
         targetValue = if (isSelected) Color(0xFF0080FF) else Color.Transparent,
         animationSpec = tween(durationMillis = 200)
@@ -78,10 +76,9 @@ fun CustomNavigationBarItem(
         Icon(
             imageVector = when (screen) {
                 AppScreens.Home -> Icons.Filled.Home
-//                AppScreens.Explore -> Icons.Filled.Search
-                AppScreens.Bookmarks -> Icons.Filled.Favorite
-                AppScreens.Setting -> Icons.Filled.Settings
-                else -> Icons.Filled.Home // Dummy
+                AppScreens.Bookmark -> Icons.Filled.Favorite
+                AppScreens.Settings -> Icons.Filled.Settings
+                // Dummy
             },
             contentDescription = screen.name,
             modifier = Modifier.size(iconSize),

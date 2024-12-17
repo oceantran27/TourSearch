@@ -7,6 +7,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
+import com.example.flybooking.navigation.AppScreens
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +32,7 @@ class DateInputTest {
 
     @Test
     fun testDepartDateSelectionUpdatesHomeViewModel() {
-        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), TIMEOUT)
+        val homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), TIMEOUT)
         assert(homeScreen) { "Home screen should be displayed by default" }
 
         sleep(1000)
@@ -55,14 +56,14 @@ class DateInputTest {
         val selectedDateField = device.findObject(By.desc("Departure text"))
         assert(selectedDateField != null) { "Departure text field not found" }
         val selectedDateText = selectedDateField.text
-        assert(selectedDateText == "29 Dec, 2024") {
+        assert(selectedDateText == "29 Dec, 2024" || selectedDateText == "29 Th12, 2024") {
             "Expected: 29 Dec, 2024, Found: $selectedDateText"
         }
     }
 
     @Test
     fun testReturnDateSelectionUpdatesHomeViewModel() {
-        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), TIMEOUT)
+        val homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), TIMEOUT)
         assert(homeScreen) { "Home screen should be displayed by default" }
 
         sleep(1000)
@@ -86,7 +87,7 @@ class DateInputTest {
         val selectedDateField = device.findObject(By.desc("Return text"))
         assert(selectedDateField != null) { "Return text field not found" }
         val selectedDateText = selectedDateField.text
-        assert(selectedDateText == "30 Dec, 2024") {
+        assert(selectedDateText == "30 Dec, 2024" || selectedDateText == "30 Th12, 2024") {
             "Expected: 30 Dec, 2024, Found: $selectedDateText"
         }
     }
