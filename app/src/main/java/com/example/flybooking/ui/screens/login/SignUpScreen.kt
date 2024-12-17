@@ -26,6 +26,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -101,21 +103,27 @@ fun SignUpScreen(
             value = fullName,
             onValueChange = { fullName = it },
             label = { Text("Full name") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().semantics {
+                contentDescription = "Full name input"
+            }
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             label = { Text("Valid email") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().semantics {
+                contentDescription = "Email input"
+            }
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = phoneNumber,
             onValueChange = { phoneNumber = it },
             label = { Text("Phone number") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().semantics {
+                contentDescription = "Phone number input"
+            }
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
@@ -123,7 +131,9 @@ fun SignUpScreen(
             onValueChange = { password = it },
             label = { Text("Strong Password") },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().semantics {
+                contentDescription = "Password input"
+            }
         )
         Spacer(modifier = Modifier.height(30.dp))
         Button(
@@ -134,7 +144,8 @@ fun SignUpScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp),
+                .height(48.dp)
+                .semantics { contentDescription = "SignUpButton" },
             enabled = authState.value !is AuthState.Loading,
         ) {
             Text("Sign up")

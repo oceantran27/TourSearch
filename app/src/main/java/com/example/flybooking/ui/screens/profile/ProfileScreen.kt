@@ -46,6 +46,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,9 +55,9 @@ import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.example.flybooking.R
 import com.example.flybooking.activity.AppViewModelProvider
 import com.example.flybooking.activity.MainActivity
-import com.example.flybooking.R
 import com.example.flybooking.help.convertTimestampToDate
 import com.example.flybooking.ui.viewmodel.AuthState
 import com.example.flybooking.ui.viewmodel.AuthViewModel
@@ -189,7 +191,10 @@ fun ProfileScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp),
+                    .height(50.dp)
+                    .semantics {
+                        contentDescription = "SignOutButton"
+                    },
                 colors = ButtonDefaults.buttonColors(Color.Red),
                 shape = MaterialTheme.shapes.medium
             ) {

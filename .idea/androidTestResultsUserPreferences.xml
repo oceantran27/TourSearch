@@ -43,6 +43,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1173644661">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung SM-M336B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-758882069">
           <value>
             <AndroidTestResultsTableState>
@@ -78,6 +91,7 @@
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_2_API_35" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="samsung SM-M336B" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -91,6 +105,7 @@
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_2_API_35" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="samsung SM-M336B" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -122,6 +137,35 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-163873728">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_2_API_35" value="120" />
+                  <entry key="Pixel_6_API_34" value="120" />
+                  <entry key="Pixel_7_API_35" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung SM-M336B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="528511001">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_7_API_35" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="573339340">
           <value>
             <AndroidTestResultsTableState>
@@ -143,6 +187,7 @@
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_2_API_35" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="samsung SM-M336B" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -161,6 +206,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="1002528215">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_7_API_35" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="1068662757">
           <value>
             <AndroidTestResultsTableState>
@@ -168,6 +226,21 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_2_API_35" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung SM-M336B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1359449258">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_2_API_35" value="120" />
+                  <entry key="Pixel_6_API_34" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="samsung SM-M336B" value="120" />
                 </map>

@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flybooking.firebase.FirestoreService
 import com.example.flybooking.model.Booking
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -56,21 +59,38 @@ class BookingViewModel(
         }
     }
 
-    fun dbReadBooking(bookingId: String) {
-        _bookingState.value = BookingState.Loading
-        viewModelScope.launch {
-            try {
-                val booking = firestoreService.readBooking(bookingId)
-                if (booking != null) {
-                    _bookingState.value = BookingState.BookingDetails(booking)
-                    _bookingDetailsStateFlow.value = booking
-                } else {
-                    _bookingState.value = BookingState.Error("Booking not found")
+//    suspend fun dbReadBooking(bookingId: String): Booking? {
+//        _bookingState.value = BookingState.Loading
+//        var ret: Booking? = null
+//        viewModelScope.launch {
+//            try {
+////                val booking = firestoreService.readBooking(bookingId)
+////                if (booking != null) {
+////                    _bookingState.value = BookingState.BookingDetails(booking)
+////                    _bookingDetailsStateFlow.value = booking
+////                } else {
+////                    _bookingState.value = BookingState.Error("Booking not found")
+////                }
+//                ret = firestoreService.readBooking(bookingId)
+//            } catch (e: Exception) {
+////                _bookingState.value = BookingState.Error("Error fetching booking: ${e.message}")
+//                Log.e("BookingViewModel", "Error fetching booking", e)
+//            }
+//        }
+//        return ret
+//    }
+
+    suspend fun getAllBooking(ids: List<String>): List<Booking> = coroutineScope {
+        try {
+            // Chạy các công việc bất đồng bộ và đợi tất cả kết quả
+            ids.map { id ->
+                async {
+                    firestoreService.readBooking(id)
                 }
-            } catch (e: Exception) {
-                _bookingState.value = BookingState.Error("Error fetching booking: ${e.message}")
-                Log.e("BookingViewModel", "Error fetching booking", e)
-            }
+            }.awaitAll().filterNotNull() // Đợi và lọc kết quả
+        } catch (e: Exception) {
+            Log.e("BookingViewModel", "Error fetching booking", e)
+            emptyList() // Trả về danh sách rỗng nếu có lỗi
         }
     }
 

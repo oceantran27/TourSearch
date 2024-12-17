@@ -5,13 +5,12 @@ enum class AppScreens {
 
     //    SearchResults,
 //    Explore,
-    Bookmarks,
-    Setting
+    Bookmark,
+    Settings
 }
 
 fun onNavBar(screen: AppScreens): Boolean {
     return screen == AppScreens.Home ||
-//            screen == AppScreens.Explore ||
-            screen == AppScreens.Bookmarks ||
-            screen == AppScreens.Setting
+            screen == AppScreens.Bookmark ||
+            screen == AppScreens.Settings
 }

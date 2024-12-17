@@ -36,7 +36,7 @@ class AppNavigationTest {
 
     @Test
     fun testHomeScreenDisplayedByDefault() {
-        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), 10000L)
+        val homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), 10000L)
         assert(homeScreen) {
             "Home screen should be displayed by default"
         }
@@ -44,12 +44,12 @@ class AppNavigationTest {
 
     @Test
     fun testBookmarkButtonAvailable() {
-        val homeScreen = device.wait(Until.hasObject(By.desc("HOME_SCREEN")), 10000L)
+        val homeScreen = device.wait(Until.hasObject(By.desc(AppScreens.Home.name)), 10000L)
         assert(homeScreen) {
             "Home screen should be displayed by default"
         }
-        sleep(100)
-        val bookmarkButton = device.findObject(By.desc("Bookmarks"))
+        sleep(300)
+        val bookmarkButton = device.findObject(By.desc(AppScreens.Bookmark.name + "_TAB"))
         assert(bookmarkButton != null) {
             "Bookmark button not found"
         }
@@ -57,7 +57,7 @@ class AppNavigationTest {
         bookmarkButton.click()
         sleep(500)
 
-        val bookmarkScreen = device.wait(Until.hasObject(By.desc("BOOKMARK_SCREEN")), 10000L)
+        val bookmarkScreen = device.wait(Until.hasObject(By.desc(AppScreens.Bookmark.name)), 10000L)
         assert(bookmarkScreen) {
             "Bookmark screen should be displayed"
         }

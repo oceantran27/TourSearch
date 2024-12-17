@@ -84,7 +84,10 @@ fun HeaderSection(
                         }
                         context.startActivity(intent)
                     },
-                    border = BorderStroke(1.dp, Color.White)
+                    border = BorderStroke(1.dp, Color.White),
+                    modifier = Modifier.semantics {
+                        contentDescription = "Account_Button"
+                    }
                 ) {
                     Text(
                         text = if (authViewModel.isLoggedIn()) "Account" else "Login",

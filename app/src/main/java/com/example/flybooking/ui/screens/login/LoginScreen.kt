@@ -32,6 +32,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -77,7 +79,10 @@ fun LoginScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState())
+            .semantics {
+                contentDescription = "LoginScreen"
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
@@ -97,7 +102,9 @@ fun LoginScreen(
             label = { Text("Enter your email") },
             singleLine = true,
             leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().semantics {
+                contentDescription = "Email_Input"
+            }
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
@@ -107,7 +114,9 @@ fun LoginScreen(
             singleLine = true,
             leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon") },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().semantics {
+                contentDescription = "Password_Input"
+            }
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -130,10 +139,14 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .height(48.dp)
         ) {
-            Text("Login")
+            Text(text = "Login", modifier = Modifier.semantics {
+                contentDescription = "Login_Button"
+            })
         }
         Spacer(modifier = Modifier.height(16.dp))
-        TextButton(onClick = { navController.navigate("signup") }) {
+        TextButton(onClick = { navController.navigate("signup") }, modifier = Modifier.semantics {
+            contentDescription = "SignUpPageButton"
+        }) {
             Text("New Member? Register now")
         }
     }
