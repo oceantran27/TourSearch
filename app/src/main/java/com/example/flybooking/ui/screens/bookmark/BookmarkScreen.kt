@@ -24,6 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -60,24 +62,38 @@ fun BookmarkScreen(
         loadingState.value = false
     }
 
-    if (loadingState.value) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            CircularProgressIndicator()
-        }
-    } else {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(bookingHistoryState.value) { booking ->
-                BookingCard(booking)
+    Column {
+        Text(
+            text = "Booking History",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(16.dp).semantics {
+                contentDescription = "BookingHistory"
+            }
+        )
+        if (loadingState.value) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+                    .semantics { contentDescription = "BookmarkCard" }) {
+                items(bookingHistoryState.value) { booking ->
+                    BookingCard(booking, modifier.semantics {
+                        contentDescription = "BookingCard"
+                    })
+                }
             }
         }
     }
 }
 
 @Composable
-fun BookingCard(booking: Booking) {
+fun BookingCard(booking: Booking, modifier: Modifier = Modifier) {
     val context: Context = LocalContext.current
 
     Card(
@@ -88,7 +104,7 @@ fun BookingCard(booking: Booking) {
                 SharedViewModel.booking = booking
                 val intent = Intent(context, BookingDetailActivity::class.java)
                 context.startActivity(intent)
-            }
+            }.semantics { contentDescription = "BookingCard" }
     ) {
         Column(
             modifier = Modifier

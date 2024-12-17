@@ -1,4 +1,4 @@
-package com.example.flybooking.login
+package com.example.flybooking.ui.screens.login
 
 import android.content.Context
 import android.content.Intent
