@@ -41,7 +41,7 @@ class LoginTest {
             "Home screen should be displayed by default"
         }
 
-        sleep(500)
+        sleep(1000)
 
         var loginPageButton = device.findObject(By.desc("Account_Button"))
         assert(loginPageButton != null) {
@@ -54,11 +54,11 @@ class LoginTest {
         val signOutButton = device.findObject(By.desc("SignOutButton"))
         if (signOutButton != null) {
             signOutButton.click()
-            sleep(500)
+            sleep(1000)
             loginPageButton = device.wait(Until.findObject(By.desc("Account_Button")), 10000L)
             assert(loginPageButton != null) { "Account button should reappear after app restart." }
             loginPageButton.click()
-            sleep(500)
+            sleep(1000)
         }
 
         val loginScreen = device.wait(Until.hasObject(By.desc("LoginScreen")), 10000L)
@@ -74,7 +74,7 @@ class LoginTest {
             "Home screen should be displayed by default"
         }
 
-        sleep(500)
+        sleep(1000)
 
         var loginPageButton = device.findObject(By.desc("Account_Button"))
 
@@ -84,11 +84,11 @@ class LoginTest {
         val signOutButton = device.findObject(By.desc("SignOutButton"))
         if (signOutButton != null) {
             signOutButton.click()
-            sleep(500)
+            sleep(1000)
             loginPageButton = device.wait(Until.findObject(By.desc("Account_Button")), 10000L)
             assert(loginPageButton != null) { "Account button should reappear after app restart." }
             loginPageButton.click()
-            sleep(500)
+            sleep(1000)
         }
 
         val loginScreen = device.wait(Until.hasObject(By.desc("LoginScreen")), 10000L)
@@ -101,7 +101,7 @@ class LoginTest {
             "Email input field should be displayed"
         }
         emailInput.click()
-        sleep(500)
+        sleep(1000)
         device.executeShellCommand("input text admin@gmail.com")
 
         val passwordInput = device.findObject(By.desc("Password_Input"))
@@ -113,10 +113,10 @@ class LoginTest {
             "Login button should be displayed"
         }
         passwordInput.click()
-        sleep(500)
+        sleep(1000)
         device.executeShellCommand("input text 123456789")
-//        device.executeShellCommand("input keyevent KEYCODE_BACK")
-        sleep(500)
+        device.executeShellCommand("input keyevent KEYCODE_BACK")
+        sleep(1000)
 
         loginButton.click()
 
@@ -135,7 +135,7 @@ class LoginTest {
             "Home screen should be displayed by default"
         }
 
-        sleep(500)
+        sleep(1000)
 
         var loginPageButton = device.findObject(By.desc("Account_Button"))
         assert(loginPageButton != null) {
@@ -148,11 +148,11 @@ class LoginTest {
         val signOutButton = device.findObject(By.desc("SignOutButton"))
         if (signOutButton != null) {
             signOutButton.click()
-            sleep(500)
+            sleep(1000)
             loginPageButton = device.wait(Until.findObject(By.desc("Account_Button")), 500L)
             assert(loginPageButton != null) { "Account button should reappear after app restart." }
             loginPageButton.click()
-            sleep(500)
+            sleep(1000)
         }
 
         val loginScreen = device.wait(Until.hasObject(By.desc("LoginScreen")), 10000L)
@@ -165,7 +165,7 @@ class LoginTest {
             "Email input field should be displayed"
         }
         emailInput.click()
-        sleep(500)
+        sleep(1000)
         device.executeShellCommand("input text admin")
 
         val passwordInput = device.findObject(By.desc("Password_Input"))
@@ -177,10 +177,10 @@ class LoginTest {
             "Login button should be displayed"
         }
         passwordInput.click()
-        sleep(500)
+        sleep(1000)
         device.executeShellCommand("input text 123")
-//        device.executeShellCommand("input keyevent KEYCODE_BACK")
-        sleep(500)
+        device.executeShellCommand("input keyevent KEYCODE_BACK")
+        sleep(1000)
         loginButton.click()
 
         sleep(3000)
@@ -198,7 +198,7 @@ class LoginTest {
             "Home screen should be displayed by default"
         }
 
-        sleep(500)
+        sleep(1000)
 
         var loginPageButton = device.findObject(By.desc("Account_Button"))
         assert(loginPageButton != null) {
@@ -211,11 +211,11 @@ class LoginTest {
         val signOutButton = device.findObject(By.desc("SignOutButton"))
         if (signOutButton != null) {
             signOutButton.click()
-            sleep(500)
+            sleep(1000)
             loginPageButton = device.wait(Until.findObject(By.desc("Account_Button")), 500L)
             assert(loginPageButton != null) { "Account button should reappear after app restart." }
             loginPageButton.click()
-            sleep(500)
+            sleep(1000)
         }
 
         val loginScreen = device.wait(Until.hasObject(By.desc("LoginScreen")), 10000L)
@@ -223,14 +223,14 @@ class LoginTest {
             "Login screen should be displayed"
         }
 
-        sleep(500)
+        sleep(1000)
 
         val registerButton = device.findObject(By.desc("SignUpPageButton"))
         assert(registerButton != null) {
             "Sign up page button should be displayed"
         }
         registerButton.click()
-        sleep(500)
+        sleep(1000)
         val fullNameField = device.findObject(By.desc("Full name input"))
         assert(fullNameField != null) {
             "Full name input field should be displayed"
@@ -253,18 +253,18 @@ class LoginTest {
         }
 
         fullNameField.click()
-        sleep(500)
+        sleep(1000)
         device.executeShellCommand("input text someone")
         // Generate a random email
         val email = "someone" + (10..999999).random() + "@gmail.com"
         validEmailField.click()
-        sleep(500)
+        sleep(1000)
         device.executeShellCommand("input text $email")
         phoneNumberField.click()
-        sleep(500)
+        sleep(1000)
         device.executeShellCommand("input text 123456789")
         passwordField.click()
-        sleep(500)
+        sleep(1000)
         device.executeShellCommand("input text 123456789")
 
         signUpButton.click()
@@ -283,7 +283,7 @@ class LoginTest {
             "Home screen should be displayed by default"
         }
 
-        sleep(500)
+        sleep(1000)
 
         var loginPageButton = device.findObject(By.desc("Account_Button"))
         assert(loginPageButton != null) {
@@ -291,7 +291,7 @@ class LoginTest {
         }
 
         loginPageButton.click()
-        sleep(500)
+        sleep(2000)
 
         val signOutButton = device.findObject(By.desc("SignOutButton"))
         if (signOutButton == null) {
@@ -305,7 +305,7 @@ class LoginTest {
                 "Email input field should be displayed"
             }
             emailInput.click()
-            sleep(500)
+            sleep(1000)
             device.executeShellCommand("input text admin@gmail.com")
 
             val passwordInput = device.findObject(By.desc("Password_Input"))
@@ -317,12 +317,12 @@ class LoginTest {
                 "Login button should be displayed"
             }
             passwordInput.click()
-            sleep(500)
+            sleep(1000)
             device.executeShellCommand("input text 123456789")
-            sleep(500)
+            sleep(1000)
 
             loginButton.click()
-            sleep(3000)
+            sleep(4000)
 
             loginPageButton = device.findObject(By.desc("Account_Button"))
             assert(loginPageButton != null) {
@@ -330,7 +330,7 @@ class LoginTest {
             }
 
             loginPageButton.click()
-            sleep(500)
+            sleep(2000)
         }
 
         val editProfileButton = device.findObject(By.desc("EditProfileButton"))
@@ -338,11 +338,15 @@ class LoginTest {
             "Edit profile button should be displayed"
         }
         editProfileButton.click()
-        sleep(500)
+        sleep(1000)
 
         val phoneField = device.findObject(By.desc("PhoneEditField"))
         assert(phoneField != null) {
             "Phone edit field should be displayed"
+        }
+        val saveButton = device.findObject(By.desc("SaveChangesButton"))
+        assert(saveButton != null) {
+            "Save changes button should be displayed"
         }
         val randomPhone = (100000000..999999999).random().toString()
         phoneField.click()
@@ -354,12 +358,9 @@ class LoginTest {
         }
         sleep(100)
         device.executeShellCommand("input text $randomPhone")
+        device.executeShellCommand("input keyevent KEYCODE_BACK")
         sleep(2000)
 
-        val saveButton = device.findObject(By.desc("SaveChangesButton"))
-        assert(saveButton != null) {
-            "Save changes button should be displayed"
-        }
         saveButton.click()
         sleep(1500)
 
