@@ -354,7 +354,7 @@ class LoginTest {
         }
         sleep(100)
         device.executeShellCommand("input text $randomPhone")
-        sleep(500)
+        sleep(2000)
 
         val saveButton = device.findObject(By.desc("SaveChangesButton"))
         assert(saveButton != null) {
