@@ -158,7 +158,7 @@ fun ProfileScreen(
                 icon = painterResource(id = R.drawable.cake),
                 text = convertTimestampToDate(user?.birthday ?: 0L)
             )
-            ProfileItem(icon = Icons.Default.Phone, text = user?.phoneNumber ?: "Loading...")
+            ProfileItem(icon = Icons.Default.Phone, text = user?.phoneNumber ?: "Loading...", contentDesc = "PhoneField")
             ProfileItem(icon = Icons.Default.Email, text = user?.email ?: "Loading...")
             ProfileItem(
                 icon = Icons.Default.Visibility,
@@ -173,7 +173,10 @@ fun ProfileScreen(
                 onClick = { navController.navigate("edit") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp),
+                    .height(50.dp)
+                    .semantics {
+                        contentDescription = "EditProfileButton"
+                    },
                 colors = ButtonDefaults.buttonColors(),
                 shape = MaterialTheme.shapes.medium
             ) {
@@ -214,6 +217,7 @@ fun ProfileItem(
     icon: Any,
     text: String,
     showChangeButton: Boolean = false,
+    contentDesc: String = "",
     onChangeClick: (() -> Unit)? = null
 ) {
     Row(
@@ -230,7 +234,9 @@ fun ProfileItem(
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        Text(text = text, fontSize = 16.sp, color = Color.Gray)
+        Text(text = text, fontSize = 16.sp, color = Color.Gray, modifier = Modifier.semantics {
+            contentDescription = contentDesc
+        })
 
         if (showChangeButton) {
             Spacer(
