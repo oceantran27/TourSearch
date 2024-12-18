@@ -45,6 +45,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -53,11 +55,11 @@ import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.flybooking.activity.AppViewModelProvider
 import com.example.flybooking.R
+import com.example.flybooking.activity.AppViewModelProvider
 import com.example.flybooking.help.convertTimestampToDate
-import com.example.flybooking.utils.DatePickerModal
 import com.example.flybooking.ui.viewmodel.AuthViewModel
+import com.example.flybooking.utils.DatePickerModal
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -177,6 +179,7 @@ fun EditProfileScreen(
                 )
             }
             EditableProfileItem(
+                contentDesc = "PhoneEditField",
                 label = "Phone",
                 value = phone,
                 keyboardType = KeyboardType.Phone
@@ -205,7 +208,10 @@ fun EditProfileScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp),
+                    .height(50.dp)
+                    .semantics {
+                        contentDescription = "SaveChangesButton"
+                    },
                 colors = ButtonDefaults.buttonColors(),
                 shape = MaterialTheme.shapes.medium
             ) {
@@ -236,6 +242,7 @@ fun EditProfileScreen(
 
 @Composable
 fun EditableProfileItem(
+    contentDesc: String = "",
     label: String,
     value: String,
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -251,7 +258,9 @@ fun EditableProfileItem(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().semantics {
+                contentDescription = contentDesc
+            },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType)
         )
     }
